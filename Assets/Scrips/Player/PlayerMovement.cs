@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     {
         movimiento.x = Input.GetAxisRaw("Horizontal");
         movimiento.y = Input.GetAxisRaw("Vertical");
-        movimiento.Normalize();     //Evita que el movimiento sea más rápido en diagonal
+        //movimiento.Normalize();     //Evita que el movimiento sea más rápido en diagonal
     }
 
     void FixedUpdate() { jugador.rb.MovePosition(jugador.rb.position + movimiento * velocidadActual * Time.fixedDeltaTime); }
