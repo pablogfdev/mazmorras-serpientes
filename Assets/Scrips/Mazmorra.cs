@@ -6,15 +6,16 @@ public class Mazmorra : MonoBehaviour
     private GameObject habitacionPrefab;
     private GameObject conexionPrefab;
     private int numeroHabitaciones = 10;
-    private float distanciaHabitaciones = 50f;
+    private float distanciaHabitaciones = 100f;
 
-    private int nivel = 1;
+    private int nivel = 0;
     public int Nivel { get => nivel; }
 
     public List<GameObject> habitaciones = new List<GameObject>();
 
     private void Awake()
     {
+        
         conexionPrefab = Resources.Load<GameObject>("Prefabs/Conexion");
         habitacionPrefab = Resources.Load<GameObject>("Prefabs/Habitacion");
     }
@@ -28,11 +29,12 @@ public class Mazmorra : MonoBehaviour
     {
         for (int i = 0; i < numeroHabitaciones; i++)
         {
+            nivel++;
             Vector3 posicionHabitacion = new Vector3(i * distanciaHabitaciones, 0, 0);
-            GameObject habitacion = Instantiate(habitacionPrefab, posicionHabitacion, Quaternion.identity);
+            GameObject habitacion = Instantiate(habitacionPrefab, posicionHabitacion, Quaternion.identity, transform);
             habitacion.name = $"Habitacion_{i + 1}";
             habitaciones.Add(habitacion);
-            nivel++;
+            
         }
     }
 
@@ -42,7 +44,7 @@ public class Mazmorra : MonoBehaviour
 
         for (int i = 0; i < numeroHabitaciones; i++)
         {        
-            GameObject conexion = Instantiate(conexionPrefab);
+            GameObject conexion = Instantiate(conexionPrefab, transform);
             conexion.name = $"Conexion_{i}_{(i + 1) % numeroHabitaciones}";
 
             Transform puertaA = conexion.transform.Find("PuertaA");

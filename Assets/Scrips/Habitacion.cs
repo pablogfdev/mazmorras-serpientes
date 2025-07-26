@@ -15,14 +15,14 @@ public class Habitacion : MonoBehaviour
     private GameObject sueloPrefab;
     private GameObject cofrePrefab;
     private GameObject serpientePrefab;
-    private Mazmorra piso;
+    private Mazmorra mazmorra;
 
     List<Vector3> posicionesOcupadas = new List<Vector3>();
 
     [System.Obsolete]
     void Awake()
     {
-        asignacionPrefabs();
+        asignarPrefabs();
         CalcularTamañoYContenido();
     }
 
@@ -36,8 +36,8 @@ public class Habitacion : MonoBehaviour
     [System.Obsolete]
     void CalcularTamañoYContenido()
     {
-        piso = FindObjectOfType<Mazmorra>();
-        nivel = piso.Nivel;
+        mazmorra = GetComponentInParent<Mazmorra>();
+        nivel = mazmorra.Nivel;
 
         ancho = 15 + nivel * 2 + Random.Range(-1, 2);
         altura = 12 + nivel + Random.Range(-1, 2);
@@ -53,12 +53,12 @@ public class Habitacion : MonoBehaviour
                                     Random.Range(6, 9);
     }
 
-    void asignacionPrefabs()
+    void asignarPrefabs()
     {
         paredPrefab = Resources.Load<GameObject>("Prefabs/Pared");
         sueloPrefab = Resources.Load<GameObject>("Prefabs/Suelo");
         cofrePrefab = Resources.Load<GameObject>("Prefabs/Cofre");
-        serpientePrefab = Resources.Load<GameObject>("Prefabs/Serpiente");
+        serpientePrefab = Resources.Load<GameObject>("Prefabs/Serpiente/Serpiente");
     }
 
     void crearSuelo()
