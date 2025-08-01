@@ -3,17 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemigo
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Personajes
+  - Personaje
   - Water
   - UI
   - Pared
-  - 
-  - 
+  - ObjetoVisual
+  - Enemigos
   - 
   - 
   - 
@@ -41,11 +42,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Personajes
+  - name: Personaje
     uniqueID: 1766630469
     locked: 0
-  - name: 
+  - name: Enemigos
+    uniqueID: 1490051207
+    locked: 0
+  - name: Objeto
+    uniqueID: 1403321441
+    locked: 0
+  - name: ElementoVisualFondo
     uniqueID: 1882853479
+    locked: 0
+  - name: ElementoVisual
+    uniqueID: 4289196251
     locked: 0
   m_RenderingLayers:
   - Default

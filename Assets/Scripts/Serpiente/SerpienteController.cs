@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public enum EstadoSerpiente
+public enum EstadoSerpiente 
 {
     Pasivo,
     Alerta,
     Ataque
 }
 
-public class SerpienteController : MonoBehaviour
+public class SerpienteController : EnemigoController
 {
     private int nivel;
 
@@ -35,6 +35,7 @@ public class SerpienteController : MonoBehaviour
 
     private Transform jugador;
     public Transform Jugador { set => jugador = value; }
+    private JugadorController jugadorController;
 
     public event System.Action eventoAtaque;
     public event System.Action eventoAlerta;
@@ -47,15 +48,18 @@ public class SerpienteController : MonoBehaviour
         set
         {
             estadoActual = value;
+            if (!gameObject.activeInHierarchy) return;
             if (estadoActual == EstadoSerpiente.Ataque) eventoAtaque?.Invoke();
             if (estadoActual == EstadoSerpiente.Alerta) eventoAlerta?.Invoke();
             if (estadoActual == EstadoSerpiente.Pasivo) eventoPasivo?.Invoke();
         }
     }
 
-    void Awake()
+    protected override void Awake()
     {
-        asignarPrefabs();
+        base.Awake();
+        AsignarPrefabs();
+        AsignarJugadorController();
         AjustarEstadisticasPorNivel();
         InstanciarHijosSerpiente();
         AsignarTiempoEnMovimiento();
@@ -149,8 +153,9 @@ public class SerpienteController : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("Serpiente atacando al jugador");
-            yield return new WaitForSeconds(velocidadAtaque);
+            yield return new WaitForSeconds(velocidadAtaque * 0.25f);
+            jugadorController.Vida -= 10;
+            yield return new WaitForSeconds(velocidadAtaque * 0.75f);
         }
     }
 
@@ -216,11 +221,16 @@ public class SerpienteController : MonoBehaviour
         }
     }
 
-    void asignarPrefabs()
+    void AsignarPrefabs()
     {
         detectorJugadorPrefab = Resources.Load<GameObject>("Prefabs/Serpiente/DetectorJugador");
         areaAtaquePrefab = Resources.Load<GameObject>("Prefabs/Serpiente/AreaAtaque");
         zPrefab = Resources.Load<GameObject>("Prefabs/Serpiente/Z");      //Codigo temporal: Z representa la serpiente dormida
+    }
+
+    void AsignarJugadorController()
+    {
+        jugadorController = GameObject.FindGameObjectWithTag("Player").GetComponent<JugadorController>();
     }
 
     void AjustarEstadisticasPorNivel()

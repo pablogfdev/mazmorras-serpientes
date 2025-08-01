@@ -6,7 +6,7 @@ public class DetectorController : MonoBehaviour
     private SerpienteController controladorSerpiente;
     private int nivel;
     private float escalaDetector;
-    private float cambioEscala = 16f; // Solo usado por Alerta
+    private float cambioEscala = 16f;
     private bool esDetectorJugador;
 
     void Start()
