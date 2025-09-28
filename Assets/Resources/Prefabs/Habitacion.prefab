@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8019847582770997520}
   - component: {fileID: 7218928897752848596}
+  - component: {fileID: -1322506783249058509}
   m_Layer: 0
   m_Name: Habitacion
   m_TagString: Untagged
@@ -44,6 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361d6a94eab9d048aaaeb910d220732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paredPrefab: {fileID: 5851018043305719157, guid: ac9d2154f804cea4daa77e7a888874b8, type: 3}
-  sueloPrefab: {fileID: 8451915005554088110, guid: b485eb7a1550f284b9284b96278cac4e, type: 3}
-  cofrePrefab: {fileID: 6665709177560562952, guid: f469a345256a3fb47a038e14d9fa1a3c, type: 3}
+--- !u!114 &-1322506783249058509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912929620318693918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc47ff705819aeb45b9c7cf08a35d31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

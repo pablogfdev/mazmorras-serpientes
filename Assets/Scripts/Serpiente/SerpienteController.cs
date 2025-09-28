@@ -235,7 +235,7 @@ public class SerpienteController : EnemigoController
 
     void AjustarEstadisticasPorNivel()
     {
-        Mazmorra mazmorra = GetComponentInParent<Mazmorra>();
+        MazmorraController mazmorra = GetComponentInParent<MazmorraController>();
         nivel = mazmorra.Nivel;
         velocidadMovimientoBase = 2f + nivel * 0.1f;
         velocidadAtaque = 2f - nivel * 0.1f;
@@ -249,21 +249,12 @@ public class SerpienteController : EnemigoController
         Instantiate(areaAtaquePrefab, transform.position, Quaternion.identity, transform);
     }
 
-    void AsignarTiempoDespierto()
-    {
-        tiempoDespierto = Time.time + Random.Range(40f, 60f);
-    }
+    void AsignarTiempoDespierto() => tiempoDespierto = Time.time + Random.Range(40f, 60f);
 
-    void AsignarTiempoEnMovimiento()
-    {
-        tiempoEnMovimiento = Time.time + Random.Range(3f, 6f);
-    }
+    void AsignarTiempoEnMovimiento() => tiempoEnMovimiento = Time.time + Random.Range(3f, 6f);
 
-    void AplicarColorVenenoso()
-    {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (venenoso) sr.color = new Color(0.7f, 0.4f, 0.85f); // Morado  
-    }
+    void AplicarColorVenenoso() => GetComponent<SpriteRenderer>().color = venenoso ? new Color(0.7f, 0.4f, 0.85f) : Color.white;
+
     void instanciarZ()  //Metodo temporal: muestra en la UI que la serpiente está dormida
     {
         Vector3 posicionZ = transform.position + Vector3.left * 0.5f;

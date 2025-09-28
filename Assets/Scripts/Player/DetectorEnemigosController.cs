@@ -9,15 +9,10 @@ public class DetectorEnemigosController : MonoBehaviour
     private BarraVidaObjetivoController objetivoController;
     EnemigoController enemigoMasCercano;
 
-    void Awake()
-    {
-        objetivoController = transform.parent.Find("BarraVidaObjetivo").GetComponent<BarraVidaObjetivoController>();
-    }
+    void Awake() => objetivoController = transform.parent.Find("BarraVidaObjetivo").GetComponent<BarraVidaObjetivoController>();
 
-    void Start()
-    {
-        StartCoroutine(ActualizarEnemigoCercano());
-    }
+    void Start() => StartCoroutine(ActualizarEnemigoCercano());
+    
 
     IEnumerator ActualizarEnemigoCercano()
     {

@@ -5,7 +5,7 @@ public class BarraVidaJugadorController : MonoBehaviour
 {
     private JugadorController jugador;
     private Transform barraVida;
-    private TextMeshProUGUI textoInformacionVida; 
+    private TextMeshProUGUI textoInformacionVida;
     private TextMeshProUGUI textoInformacionNombre;
     private Vector3 escalaInicial = new Vector3(6f, 0.25f, 1f);
     private float intervaloInicialX = -8.5f;
@@ -39,7 +39,7 @@ public class BarraVidaJugadorController : MonoBehaviour
     {
         barraVida = transform;
         barraVida.localScale = escalaInicial;
-        barraVida.localPosition = new Vector3(intervaloInicialX+ barraVida.localScale.x / 2, intervaloInicialY, barraVida.localPosition.z);
+        barraVida.localPosition = new Vector3(intervaloInicialX + barraVida.localScale.x / 2, intervaloInicialY, barraVida.localPosition.z);
     }
 
     void InstanciarFondoBarraVida()
@@ -71,5 +71,4 @@ public class BarraVidaJugadorController : MonoBehaviour
         textoInformacionVida.text = jugador.Vida.ToString();
         textoInformacionNombre.text = "NombreJugador";
     }
-
 }

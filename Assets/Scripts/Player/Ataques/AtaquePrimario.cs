@@ -6,10 +6,8 @@ public class AtaquePrimario : MonoBehaviour
     private bool ataqueEjecutado = false;
     private BarraVidaObjetivoController barraVida;
 
-    private void OnEnable()
-    {
-        ataqueEjecutado = false;
-    }
+    private void OnEnable() => ataqueEjecutado = false;
+
 
     void Awake()
     {
@@ -21,9 +19,7 @@ public class AtaquePrimario : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (ataqueEjecutado) return;
-
         if (!other.CompareTag("Enemigo")) return;
-
         enemigo = barraVida.Enemigo;
         if (enemigo != null) enemigo.Vida -= 20;
         ataqueEjecutado = true;

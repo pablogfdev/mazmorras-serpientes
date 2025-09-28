@@ -14,7 +14,7 @@ public class MovimientoJugador : MonoBehaviour
         jugador.eventoCambioVelocidad += ActualizarVelocidad;
     }
 
-    void ActualizarVelocidad(float nuevaVelocidad) { velocidadActual = nuevaVelocidad; }
+    void ActualizarVelocidad(float nuevaVelocidad) => velocidadActual = nuevaVelocidad;
 
     void Update()
     {
@@ -23,6 +23,6 @@ public class MovimientoJugador : MonoBehaviour
         movimiento.Normalize();
     }
 
-    void FixedUpdate() { jugador.rb.MovePosition(jugador.rb.position + movimiento * velocidadActual * Time.fixedDeltaTime); }
-    void OnDestroy() { jugador.eventoCambioVelocidad -= ActualizarVelocidad; }
+    void FixedUpdate() => jugador.rb.MovePosition(jugador.rb.position + movimiento * velocidadActual * Time.fixedDeltaTime);
+    void OnDestroy() => jugador.eventoCambioVelocidad -= ActualizarVelocidad;
 }

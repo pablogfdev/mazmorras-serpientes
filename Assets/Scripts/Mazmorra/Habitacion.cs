@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Habitacion : MonoBehaviour
+public class HabitacionController : MonoBehaviour
 {
     private int nivel;
     private float ancho;
@@ -10,63 +10,64 @@ public class Habitacion : MonoBehaviour
 
     private int numCofres;
     private int numSerpientes;
-
     private GameObject paredPrefab;
     private GameObject sueloPrefab;
     private GameObject cofrePrefab;
     private GameObject serpientePrefab;
-    private Mazmorra mazmorra;
+    private GameObject llavePrefab;
+    private MazmorraController mazmorra;
 
-    List<Vector3> posicionesOcupadas = new List<Vector3>();
+    float distancia = 2f;
 
-    [System.Obsolete]
+    public bool LlaveGenerada { get; set; } = false;
+
+    List<GameObject> posicionesOcupadas = new List<GameObject>();
+
     void Awake()
     {
         asignarPrefabs();
         CalcularTamañoYContenido();
-    }
-
-    void Start()
-    {
         crearParedes();
         crearSuelo();
         generarEntidades();
     }
 
-    [System.Obsolete]
+    public void ColocarLlave()
+    {
+        foreach (GameObject obj in posicionesOcupadas)
+        {
+            if (!obj.CompareTag("Cofre")) continue;
+            Instantiate(llavePrefab, obj.transform.position, Quaternion.identity, transform);
+            return;
+        }
+    }
+
     void CalcularTamañoYContenido()
     {
-        mazmorra = GetComponentInParent<Mazmorra>();
+        mazmorra = GetComponentInParent<MazmorraController>();
         nivel = mazmorra.Nivel;
 
-        ancho = 15 + nivel * 2 + Random.Range(-1, 2);
-        altura = 12 + nivel + Random.Range(-1, 2);
+        ancho = 15 + nivel * 2;
+        altura = 12 + nivel;
 
-        numCofres = (nivel < 3) ? Random.Range(0, 2) :
-                    (nivel < 7) ? Random.Range(1, 3) :
-                                Random.Range(2, 4);
-
-        numSerpientes = (nivel < 2) ? Random.Range(0, 2) :
-                        (nivel < 5) ? Random.Range(1, 4) :
-                        (nivel < 7) ? Random.Range(3, 5) :
-                        (nivel < 9) ? Random.Range(5, 7) :
-                                    Random.Range(6, 9);
+        numCofres = Random.Range(1, 1 + (nivel / 3) + 1);
+        numSerpientes = Random.Range(nivel / 2, nivel / 2 + 2);
     }
 
     void asignarPrefabs()
     {
+        serpientePrefab = Resources.Load<GameObject>("Prefabs/Serpiente/Serpiente");
         paredPrefab = Resources.Load<GameObject>("Prefabs/Pared");
         sueloPrefab = Resources.Load<GameObject>("Prefabs/Suelo");
         cofrePrefab = Resources.Load<GameObject>("Prefabs/Cofre");
-        serpientePrefab = Resources.Load<GameObject>("Prefabs/Serpiente/Serpiente");
+        llavePrefab = Resources.Load<GameObject>("Prefabs/Llave");
     }
 
     void crearSuelo()
     {
         Vector3 centro = transform.position;
-        Vector3 escala = new Vector3(ancho - grosorPared, altura - grosorPared, 1);
         GameObject suelo = Instantiate(sueloPrefab, centro, Quaternion.identity, transform);
-        suelo.transform.localScale = escala;
+        suelo.transform.localScale = new Vector3(ancho - grosorPared, altura - grosorPared, 1);
     }
 
     void crearParedes()
@@ -101,9 +102,8 @@ public class Habitacion : MonoBehaviour
     void colocarEntidadEnPosicioValida(GameObject prefab)
     {
         Vector3 centro = transform.position;
-        float distancia = (prefab == cofrePrefab) ? 4f : 2f;
 
-        // Reducimos 4f para evitar que la entidad aparezca pegado a las paredes
+        //Reducimos 4f para evitar que la entidad aparezca pegado a las paredes
         float rangoX = (ancho / 2) - grosorPared - 4f;
         float rangoY = (altura / 2) - grosorPared - 4f;
 
@@ -119,9 +119,9 @@ public class Habitacion : MonoBehaviour
 
             posicionValida = true;
 
-            foreach (Vector3 posExistente in posicionesOcupadas)
+            foreach (GameObject posExistente in posicionesOcupadas)
             {
-                if (Vector3.Distance(posicionEntidad, posExistente) < distancia)
+                if (Vector3.Distance(posicionEntidad, posExistente.transform.position) < distancia)
                 {
                     posicionValida = false;
                     break;
@@ -129,25 +129,8 @@ public class Habitacion : MonoBehaviour
             }
 
             intentos++;
-        } while (!posicionValida && intentos < 100);
+        } while (!posicionValida && intentos < 1000);
 
-        Instantiate(prefab, posicionEntidad, Quaternion.identity, transform);
-        posicionesOcupadas.Add(posicionEntidad);
-    }
-
-    public Vector3 SituarPuerta()
-    {
-        Vector3 centro = transform.position;
-        int pared;
-
-        pared = Random.Range(0, 4);
-
-        return pared switch
-        {
-            0 => new Vector3(centro.x, centro.y - altura / 2 + grosorPared, 0),  // Abajo
-            1 => new Vector3(centro.x, centro.y + altura / 2 - grosorPared, 0),  // Arriba
-            2 => new Vector3(centro.x - ancho / 2 + grosorPared, centro.y, 0),   // Izquierda
-            _ => new Vector3(centro.x + ancho / 2 - grosorPared, centro.y, 0)    // Derecha
-        };
+        posicionesOcupadas.Add(Instantiate(prefab, posicionEntidad, Quaternion.identity, transform));
     }
 }

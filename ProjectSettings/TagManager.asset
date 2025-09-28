@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemigo
+  - Puerta
+  - Entrada
+  - Mazmorra
+  - JuegoController
+  - Cofre
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ public class DetectorController : MonoBehaviour
     void Start()
     {
         controladorSerpiente = GetComponentInParent<SerpienteController>();
-        Mazmorra mazmorra = GetComponentInParent<Mazmorra>();
+        MazmorraController mazmorra = GetComponentInParent<MazmorraController>();
         nivel = mazmorra.Nivel;
         esDetectorJugador = name.Contains("DetectorJugador");
         escalaDetector = esDetectorJugador ? 5f + nivel * 0.1f : 1f + nivel * 0.1f;

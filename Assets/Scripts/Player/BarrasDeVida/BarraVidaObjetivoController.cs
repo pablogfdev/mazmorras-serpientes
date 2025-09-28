@@ -67,7 +67,7 @@ public class BarraVidaObjetivoController : MonoBehaviour
         ActualizarTransformBarra(porcentajeVida);
         textoInformacionVida.text = enemigo.Vida.ToString();
     }
-    
+
     void SuscribirEvento()
     {
         eventoCambioBarraEnemigo += (enemigo) =>

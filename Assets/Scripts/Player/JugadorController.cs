@@ -4,6 +4,7 @@ using System.Collections;
 
 public class JugadorController : MonoBehaviour
 {
+    public bool LlaveObtenida { get; set; } = false;
     private int vidaBase = 100;
     private float vidaMaxima;
     public float VidaMaxima { get => vidaMaxima; }
