@@ -21,21 +21,14 @@ public class SalidaMazmorra : MonoBehaviour
         {
             //Con este codigo se puede subir de nivel sin haber terminado la mazmorra
             //Arreglar en proximos commits cuando la estructura del proyecto este mas avanzada
-            juegoController = GameObject.FindWithTag("JuegoController");
+            //Se debe al condicional, se sube de nivel pero si no tiene la llave no se avanza
             juegoController.GetComponent<ControlSubidaNivel>().SubirNivel(GameObject.FindWithTag("Mazmorra").GetComponentInChildren<MazmorraController>().Nivel);
             if (jugador.GetComponent<JugadorController>().LlaveObtenida) juegoController.GetComponent<EscenasController>().CargarEscenaComerciante();    
             else { Debug.Log("El jugador no tiene la llave."); }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!other.CompareTag("Player")) return;
-        jugadorEnPuerta = true;
-    }
+    private void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("Player")) jugadorEnPuerta = true; }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) jugadorEnPuerta = false;
-    }
+    private void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("Player")) jugadorEnPuerta = false; }
 }

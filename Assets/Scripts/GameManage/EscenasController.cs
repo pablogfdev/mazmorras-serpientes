@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 public class EscenasController : MonoBehaviour
 {
     private GameObject mazmorraPrefab;
+    private GameObject comerciantePrefab;
+    private GameObject jugadorPrefab;
     private GameObject mazmorra;
-    //private GameObject comerciantePrefab;
+
+    public void CargarEscenaMazmorras(int nivel) => StartCoroutine(CrearMazmorras(nivel));
+    public void CargarEscenaComerciante() => StartCoroutine(CrearComerciante());
+    public void CargarEscenaMenuPrincipal() => StartCoroutine(CrearMenuPrincipal());
 
     void Awake()
     {
@@ -19,11 +24,9 @@ public class EscenasController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         mazmorraPrefab = Resources.Load<GameObject>("Prefabs/Mazmorra");
-        //comerciantePrefab = Resources.Load<GameObject>("Prefabs/SalaPrincipal");
+        comerciantePrefab = Resources.Load<GameObject>("Prefabs/SalaPrincipal");
+        jugadorPrefab = Resources.Load<GameObject>("Prefabs/Jugador");
     }
-
-    public void CargarEscenaMazmorras(int nivel) => StartCoroutine(CrearMazmorras(nivel)); 
-    public void CargarEscenaComerciante() => StartCoroutine(CrearComerciante()); 
 
     IEnumerator CrearMazmorras(int nivel)
     {
@@ -38,7 +41,14 @@ public class EscenasController : MonoBehaviour
     {
         AsyncOperation procesoCarga = SceneManager.LoadSceneAsync("Comerciante", LoadSceneMode.Single);
         while (!procesoCarga.isDone) yield return null;
-        //Instantiate(comerciantePrefab, Vector3.zero, Quaternion.identity);
-        //Eliminar el prefabs de la escena del comerciante cuando se cree la escena del menu
+        Instantiate(comerciantePrefab, Vector3.zero, Quaternion.identity);
+        Instantiate(jugadorPrefab, Vector3.zero, Quaternion.identity);
+    }
+
+
+    IEnumerator CrearMenuPrincipal()
+    {
+        AsyncOperation procesoCarga = SceneManager.LoadSceneAsync("MenuPrincipal", LoadSceneMode.Single);
+        while (!procesoCarga.isDone) yield return null;
     }
 }

@@ -51,10 +51,7 @@ public class SelectorNivel : MonoBehaviour
         InicializarEventosUI();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E)) CerrarMenuNiveles();
-    }
+    void Update() { if (Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0f) CerrarMenuNiveles(); }
 
     void ActualizarBotonesVisibles()
     {
