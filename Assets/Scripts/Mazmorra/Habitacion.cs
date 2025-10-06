@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using PM = PrefabManager;
 
 public class HabitacionController : MonoBehaviour
 {
@@ -10,11 +11,6 @@ public class HabitacionController : MonoBehaviour
 
     private int numCofres;
     private int numSerpientes;
-    private GameObject paredPrefab;
-    private GameObject sueloPrefab;
-    private GameObject cofrePrefab;
-    private GameObject serpientePrefab;
-    private GameObject llavePrefab;
     private MazmorraController mazmorra;
 
     float distancia = 2f;
@@ -25,7 +21,6 @@ public class HabitacionController : MonoBehaviour
 
     void Awake()
     {
-        asignarPrefabs();
         CalcularTamañoYContenido();
         crearParedes();
         crearSuelo();
@@ -37,7 +32,7 @@ public class HabitacionController : MonoBehaviour
         foreach (GameObject obj in posicionesOcupadas)
         {
             if (!obj.CompareTag("Cofre")) continue;
-            Instantiate(llavePrefab, obj.transform.position, Quaternion.identity, transform);
+            Instantiate(PM.prefabManager.ObtenerPrefab("Llave"), obj.transform.position, Quaternion.identity, transform);
             return;
         }
     }
@@ -54,19 +49,11 @@ public class HabitacionController : MonoBehaviour
         numSerpientes = Random.Range(nivel / 2, nivel / 2 + 2);
     }
 
-    void asignarPrefabs()
-    {
-        serpientePrefab = Resources.Load<GameObject>("Prefabs/Serpiente/Serpiente");
-        paredPrefab = Resources.Load<GameObject>("Prefabs/Pared");
-        sueloPrefab = Resources.Load<GameObject>("Prefabs/Suelo");
-        cofrePrefab = Resources.Load<GameObject>("Prefabs/Cofre");
-        llavePrefab = Resources.Load<GameObject>("Prefabs/Llave");
-    }
 
     void crearSuelo()
     {
         Vector3 centro = transform.position;
-        GameObject suelo = Instantiate(sueloPrefab, centro, Quaternion.identity, transform);
+        GameObject suelo = Instantiate(PM.prefabManager.ObtenerPrefab("Suelo"), centro, Quaternion.identity, transform);
         suelo.transform.localScale = new Vector3(ancho - grosorPared, altura - grosorPared, 1);
     }
 
@@ -82,10 +69,10 @@ public class HabitacionController : MonoBehaviour
         Vector3 posicionParedIzquierda = centro + new Vector3(-ancho / 2, 0, 0);
         Vector3 posicionParedDerecha = centro + new Vector3(ancho / 2, 0, 0);
 
-        GameObject paredInferior = Instantiate(paredPrefab, posicionParedInferior, Quaternion.identity, transform);
-        GameObject paredSuperior = Instantiate(paredPrefab, posicionParedSuperior, Quaternion.identity, transform);
-        GameObject paredIzquierda = Instantiate(paredPrefab, posicionParedIzquierda, Quaternion.identity, transform);
-        GameObject paredDerecha = Instantiate(paredPrefab, posicionParedDerecha, Quaternion.identity, transform);
+        GameObject paredInferior = Instantiate(PM.prefabManager.ObtenerPrefab("Pared"), posicionParedInferior, Quaternion.identity, transform);
+        GameObject paredSuperior = Instantiate(PM.prefabManager.ObtenerPrefab("Pared"), posicionParedSuperior, Quaternion.identity, transform);
+        GameObject paredIzquierda = Instantiate(PM.prefabManager.ObtenerPrefab("Pared"), posicionParedIzquierda, Quaternion.identity, transform);
+        GameObject paredDerecha = Instantiate(PM.prefabManager.ObtenerPrefab("Pared"), posicionParedDerecha, Quaternion.identity, transform);
 
         paredInferior.transform.localScale = escalaHorizontal;
         paredSuperior.transform.localScale = escalaHorizontal;
@@ -95,8 +82,8 @@ public class HabitacionController : MonoBehaviour
 
     void generarEntidades()
     {
-        for (int i = 0; i < numCofres; i++) { colocarEntidadEnPosicioValida(cofrePrefab); }
-        for (int i = 0; i < numSerpientes; i++) { colocarEntidadEnPosicioValida(serpientePrefab); }
+        for (int i = 0; i < numCofres; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Cofre")); }
+        for (int i = 0; i < numSerpientes; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Serpiente")); }
     }
 
     void colocarEntidadEnPosicioValida(GameObject prefab)

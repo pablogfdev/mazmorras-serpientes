@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using PM = PrefabManager;
 
 public class MazmorraController : MonoBehaviour
 {
-    private GameObject habitacionPrefab;
-    private GameObject habitacionInicialPrefab;
-    private GameObject conexionPrefab;
+
 
     private int numeroHabitaciones = 10;
     private int nivel;
@@ -14,22 +13,15 @@ public class MazmorraController : MonoBehaviour
     private float distanciaBase = 250f;
     private List<GameObject> habitaciones = new List<GameObject>();
 
-    private void Awake()
-    {
-        conexionPrefab = Resources.Load<GameObject>("Prefabs/Conexion");
-        habitacionPrefab = Resources.Load<GameObject>("Prefabs/Habitacion");
-        habitacionInicialPrefab = Resources.Load<GameObject>("Prefabs/HabitacionInicial");
-    }
-
     void GenerarHabitaciones()
     {
-        GameObject habitacionInicial = Instantiate(habitacionInicialPrefab, Vector3.zero, Quaternion.identity, transform);
+        GameObject habitacionInicial = Instantiate(PM.prefabManager.ObtenerPrefab("HabitacionInicial"), Vector3.zero, Quaternion.identity, transform);
         habitaciones.Add(habitacionInicial);
 
         for (int i = 1; i < numeroHabitaciones; i++)
         {
             Vector3 posicionHabitacion = new Vector3(i * (distanciaBase + nivel) * 2, 0, 0);
-            GameObject habitacion = Instantiate(habitacionPrefab, posicionHabitacion, Quaternion.identity, transform);
+            GameObject habitacion = Instantiate(PM.prefabManager.ObtenerPrefab("Habitacion"), posicionHabitacion, Quaternion.identity, transform);
             habitacion.name = $"Habitacion_{i + 1}";
             habitaciones.Add(habitacion);
         }
@@ -48,7 +40,7 @@ public class MazmorraController : MonoBehaviour
 
         for (int i = 0; i < numeroHabitaciones; i++)
         {
-            GameObject conexion = Instantiate(conexionPrefab, transform);
+            GameObject conexion = Instantiate(PM.prefabManager.ObtenerPrefab("ConexionPuertas"), transform);
             conexion.name = $"Conexion_{i}_{(i + 1) % numeroHabitaciones}";
 
             Transform puertaA = conexion.transform.Find("PuertaA");

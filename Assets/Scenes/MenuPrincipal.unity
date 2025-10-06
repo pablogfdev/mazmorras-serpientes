@@ -345,8 +345,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1260334983}
   - component: {fileID: 1260334982}
-  - component: {fileID: 1260334981}
   - component: {fileID: 1260334980}
+  - component: {fileID: 1260334984}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: JuegoController
@@ -366,18 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f347fe1eee669a4a86a6112edf1554c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1260334981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260334979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a283b51ca27ff1642a80d1bceab060f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1260334982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0418ef596663de74c8891dd3eb22755c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptsEnPausa: []
 --- !u!4 &1260334983
 Transform:
   m_ObjectHideFlags: 0
@@ -406,6 +393,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1260334984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260334979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 805c1a6f5507fcb419a034289fda9c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1432048650
 GameObject:
   m_ObjectHideFlags: 0

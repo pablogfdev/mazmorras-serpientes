@@ -2,18 +2,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using EC = EscenasController;
+using PJC = PausaJuegoController;
+using PM = PrefabManager;
 
 public class SelectorNivel : MonoBehaviour
 {
     private List<GameObject> botonesInstanciados = new List<GameObject>();
     public RectTransform contenidoScroll;
     private ScrollRect scrollLista;
-    private PausaJuegoController pausaJuegoController;
-
     private GameObject menu;
     private GameObject botonCerrar;
-    private GameObject botonPrefab;
-    private GameObject juegoController;
     private GameObject botonAsignado;
     private GameObject zonaCierre;
 
@@ -34,10 +33,8 @@ public class SelectorNivel : MonoBehaviour
         botonCerrar = menu.transform.Find("BotonCerrar").gameObject;
         zonaCierre = menu.transform.Find("ZonaCierre").gameObject;
         scrollLista = menu.GetComponentInChildren<ScrollRect>();
-        botonPrefab = Resources.Load<GameObject>("Prefabs/BotonNivel");
-        juegoController = GameObject.FindWithTag("JuegoController");
-        pausaJuegoController = juegoController.GetComponent<PausaJuegoController>();
-        ultimoNivelSuperado = juegoController.GetComponent<ControlSubidaNivel>().NivelMaximo;
+        //ultimoNivelSuperado = juegoController.GetComponent<ControlSubidaNivel>().NivelMaximo;
+        ultimoNivelSuperado = GestorPartidas.partidaActiva.nivel;
     }
 
     void Start()
@@ -86,7 +83,7 @@ public class SelectorNivel : MonoBehaviour
     {
         for (int i = 0; i < botonesVisibles; i++)
         {
-            GameObject boton = Instantiate(botonPrefab, contenidoScroll);
+            GameObject boton = Instantiate(PM.prefabManager.ObtenerPrefab("BotonNivel"), contenidoScroll);
             RectTransform botonRect = boton.GetComponent<RectTransform>();
             botonRect.anchorMin = new Vector2(0f, 1f);
             botonRect.anchorMax = new Vector2(0f, 1f);
@@ -125,7 +122,7 @@ public class SelectorNivel : MonoBehaviour
         botonAsignado.GetComponent<Button>().onClick.AddListener(() =>
         {
             CerrarMenuNiveles();
-            juegoController.GetComponent<EscenasController>().CargarEscenaMazmorras(nivelMazmorra);
+            EC.escenasController.CargarEscenaMazmorras(nivelMazmorra);
         });
     }
 
@@ -140,6 +137,6 @@ public class SelectorNivel : MonoBehaviour
     void CerrarMenuNiveles()
     {
         Destroy(menu);
-        pausaJuegoController.ToggleMenuNiveles();
+        PJC.pausaJuegoController.ToggleMenuNiveles();
     }
 }

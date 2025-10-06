@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using PM = PrefabManager;
 
 public enum EstadoSerpiente 
 {
@@ -22,9 +23,7 @@ public class SerpienteController : EnemigoController
     private float tiempoDespierto;
 
     private GameObject zInstanciada;    // Codigo temporal: representa la serpiente dormida
-    private GameObject zPrefab;         // Codigo temporal: prefab de la serpiente dormida
-    private GameObject detectorJugadorPrefab;
-    private GameObject areaAtaquePrefab;
+
     private bool venenoso;
 
     private Coroutine corrutinaDescanso;
@@ -58,7 +57,6 @@ public class SerpienteController : EnemigoController
     protected override void Awake()
     {
         base.Awake();
-        AsignarPrefabs();
         AsignarJugadorController();
         AjustarEstadisticasPorNivel();
         InstanciarHijosSerpiente();
@@ -221,13 +219,6 @@ public class SerpienteController : EnemigoController
         }
     }
 
-    void AsignarPrefabs()
-    {
-        detectorJugadorPrefab = Resources.Load<GameObject>("Prefabs/Serpiente/DetectorJugador");
-        areaAtaquePrefab = Resources.Load<GameObject>("Prefabs/Serpiente/AreaAtaque");
-        zPrefab = Resources.Load<GameObject>("Prefabs/Serpiente/Z");      //Codigo temporal: Z representa la serpiente dormida
-    }
-
     void AsignarJugadorController()
     {
         jugadorController = GameObject.FindGameObjectWithTag("Player").GetComponent<JugadorController>();
@@ -245,8 +236,8 @@ public class SerpienteController : EnemigoController
 
     void InstanciarHijosSerpiente()
     {
-        Instantiate(detectorJugadorPrefab, transform.position, Quaternion.identity, transform);
-        Instantiate(areaAtaquePrefab, transform.position, Quaternion.identity, transform);
+        Instantiate(PM.prefabManager.ObtenerPrefab("DetectorJugador"), transform.position, Quaternion.identity, transform);
+        Instantiate(PM.prefabManager.ObtenerPrefab("AreaAtaque"), transform.position, Quaternion.identity, transform);
     }
 
     void AsignarTiempoDespierto() => tiempoDespierto = Time.time + Random.Range(40f, 60f);
@@ -259,7 +250,7 @@ public class SerpienteController : EnemigoController
     {
         Vector3 posicionZ = transform.position + Vector3.left * 0.5f;
         posicionZ.z = -1f;
-        zInstanciada = Instantiate(zPrefab, posicionZ, Quaternion.identity, transform);
+        zInstanciada = Instantiate(PM.prefabManager.ObtenerPrefab("Z"), posicionZ, Quaternion.identity, transform);
     }
 
     void DestruirZ()    //Metodo temporal: destruye el objeto Z instanciado que representa la serpiente dormida

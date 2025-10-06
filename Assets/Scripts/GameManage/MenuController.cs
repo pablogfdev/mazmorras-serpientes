@@ -1,90 +1,137 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using EC = EscenasController;
+using PM = PrefabManager;
+
 
 public class MenuController : MonoBehaviour
 {
+    private GameObject ventanaPartidasGuardadas;
+    private GameObject ventanaNuevaPartida;
+    private GameObject ventanaControles;
     private GameObject ventanaPrincipal;
     private GameObject ventanaAjustes;
-    private GameObject ventanaControles;
-    private GameObject ventanaNuevaPartida;
 
-    private Button botonVolverAjustes;
-    private Button botonVolverControles;
+    private Button botonVolverPartidasGuardadas;
     private Button botonVolverNuevaPartida;
-    private Button botonSalir;
-    private Button botonAjustes;
-    private Button botonControles;
+    private Button botonPartidasGuardadas;
+    private Button botonVolverControles;
+    private Button botonVolverAjustes;
     private Button botonNuevaPartida;
     private Button botonCrearPartida;
+    private Button botonControles;
+    private Button botonAjustes;
+    private Button botonSalir;
+
+    private GameObject botonPlantillaPartida;
+    private Transform contentScrollPartidas;
+    
 
     void Awake()
     {
         InstanciarMenus();
         InstanciarBotones();
         AsignarEventos();
+        ConfigurarScrollPartidas();
     }
 
-    void Start() => ActivarMenuPrincipal();
+    void Start() => ActivarVentana(ventanaPrincipal);
 
-    void InstanciarMenus(){
-        ventanaPrincipal = Instantiate(Resources.Load<GameObject>("Prefabs/Menus/VentanaPrincipal"));
-        ventanaAjustes = Instantiate(Resources.Load<GameObject>("Prefabs/Menus/VentanaAjustes"));
-        ventanaControles = Instantiate(Resources.Load<GameObject>("Prefabs/Menus/VentanaControles"));
-        ventanaNuevaPartida = Instantiate(Resources.Load<GameObject>("Prefabs/Menus/VentanaNuevaPartida"));
+    void InstanciarMenus()
+    {
+        ventanaPartidasGuardadas = Instantiate(PM.prefabManager.ObtenerPrefab("VentanaPartidasGuardadas"));
+        ventanaNuevaPartida = Instantiate(PM.prefabManager.ObtenerPrefab("VentanaNuevaPartida"));
+        ventanaControles = Instantiate(PM.prefabManager.ObtenerPrefab("VentanaControles"));
+        ventanaPrincipal = Instantiate(PM.prefabManager.ObtenerPrefab("VentanaPrincipal"));
+        ventanaAjustes = Instantiate(PM.prefabManager.ObtenerPrefab("VentanaAjustes"));
     }
 
     void InstanciarBotones()
     {
-        botonVolverAjustes = ventanaAjustes.transform.Find("BotonVolverAjustes").GetComponent<Button>();
-        botonVolverControles = ventanaControles.transform.Find("BotonVolverControles").GetComponent<Button>();
+        botonVolverPartidasGuardadas = ventanaPartidasGuardadas.transform.Find("BotonVolverPartidasGuardadas").GetComponent<Button>();
         botonVolverNuevaPartida = ventanaNuevaPartida.transform.Find("BotonVolverNuevaPartida").GetComponent<Button>();
-        botonSalir = ventanaPrincipal.transform.Find("BotonSalir").GetComponent<Button>();
-        botonNuevaPartida = ventanaPrincipal.transform.Find("BotonNuevaPartida").GetComponent<Button>();
-        botonAjustes = ventanaPrincipal.transform.Find("BotonAjustes").GetComponent<Button>();
-        botonControles = ventanaAjustes.transform.Find("BotonControles").GetComponent<Button>();
+        botonPartidasGuardadas = ventanaPrincipal.transform.Find("BotonPartidasGuardadas").GetComponent<Button>();
+        botonVolverControles = ventanaControles.transform.Find("BotonVolverControles").GetComponent<Button>();
         botonCrearPartida = ventanaNuevaPartida.transform.Find("BotonCrearPartida").GetComponent<Button>();
+        botonVolverAjustes = ventanaAjustes.transform.Find("BotonVolverAjustes").GetComponent<Button>();
+        botonNuevaPartida = ventanaPrincipal.transform.Find("BotonNuevaPartida").GetComponent<Button>();
+        botonControles = ventanaAjustes.transform.Find("BotonControles").GetComponent<Button>();
+        botonAjustes = ventanaPrincipal.transform.Find("BotonAjustes").GetComponent<Button>();
+        botonSalir = ventanaPrincipal.transform.Find("BotonSalir").GetComponent<Button>();
     }
     void AsignarEventos()
     {
-        botonVolverNuevaPartida.onClick.AddListener(ActivarMenuPrincipal);
-        botonVolverAjustes.onClick.AddListener(ActivarMenuPrincipal);
-        botonVolverControles.onClick.AddListener(ActivarMenuAjustes);
-        botonNuevaPartida.onClick.AddListener(ActivarMenuNuevaPartida);
+        botonVolverPartidasGuardadas.onClick.AddListener(() => ActivarVentana(ventanaPrincipal));
+        botonVolverNuevaPartida.onClick.AddListener(() => ActivarVentana(ventanaPrincipal));
+        botonNuevaPartida.onClick.AddListener(() => ActivarVentana(ventanaNuevaPartida));
+        botonVolverAjustes.onClick.AddListener(() => ActivarVentana(ventanaPrincipal));
+        botonVolverControles.onClick.AddListener(() => ActivarVentana(ventanaAjustes));
+        botonControles.onClick.AddListener(() => ActivarVentana(ventanaControles));
+        botonAjustes.onClick.AddListener(() => ActivarVentana(ventanaAjustes));
+        botonPartidasGuardadas.onClick.AddListener(MostrarPartidasGuardadas);
+        botonCrearPartida.onClick.AddListener(CrearPartida);
         botonSalir.onClick.AddListener(Application.Quit);
-        botonAjustes.onClick.AddListener(ActivarMenuAjustes);
-        botonControles.onClick.AddListener(ActivarMenuControles);
-        botonCrearPartida.onClick.AddListener(GameObject.FindWithTag("JuegoController").GetComponent<EscenasController>().CargarEscenaComerciante);
-    }
-    
-    public void ActivarMenuPrincipal()
-    {
-        ventanaAjustes.SetActive(false);
-        ventanaControles.SetActive(false);
-        ventanaNuevaPartida.SetActive(false);
-        ventanaPrincipal.SetActive(true);
     }
 
-    void ActivarMenuAjustes()
+    void ConfigurarScrollPartidas()
     {
-        ventanaPrincipal.SetActive(false);
-        ventanaControles.SetActive(false);
-        ventanaNuevaPartida.SetActive(false);
-        ventanaAjustes.SetActive(true);
+        contentScrollPartidas = ventanaPartidasGuardadas.transform.Find("ScrollPartidas/Viewport/Content");
+        botonPlantillaPartida = contentScrollPartidas.Find("BotonPlantillaPartida").gameObject;
+        botonPlantillaPartida.SetActive(false);
+        ScrollRect scrollLista = ventanaPartidasGuardadas.transform.Find("ScrollPartidas").GetComponent<ScrollRect>();
+        scrollLista.scrollSensitivity = Mathf.Clamp(GestorPartidas.ListasPartidas().Count , 10f, 100f);
     }
 
-    void ActivarMenuControles()
+    private void ActivarVentana(GameObject ventana)
     {
-        ventanaPrincipal.SetActive(false);
-        ventanaAjustes.SetActive(false);
+        ventanaPartidasGuardadas.SetActive(false);
         ventanaNuevaPartida.SetActive(false);
-        ventanaControles.SetActive(true);
+        ventanaPrincipal.SetActive(false);
+        ventanaControles.SetActive(false);
+        ventanaAjustes.SetActive(false);
+        ventana.SetActive(true);
     }
 
-    void ActivarMenuNuevaPartida()
+    public void MostrarPartidasGuardadas()
     {
-        ventanaPrincipal.SetActive(false);
-        ventanaAjustes.SetActive(false);
-        ventanaControles.SetActive(false);
-        ventanaNuevaPartida.SetActive(true);
+        ActivarVentana(ventanaPartidasGuardadas);
+        LimpiarBotonesAnteriores();
+        GenerarBotonesPartidasGuardadas();
+    }
+
+    void LimpiarBotonesAnteriores()
+    {
+        foreach (Transform child in contentScrollPartidas)
+        {
+            if (child.gameObject != botonPlantillaPartida) Destroy(child.gameObject);
+        }
+    }
+
+    void GenerarBotonesPartidasGuardadas()
+    {
+        foreach (Partida partida in GestorPartidas.ListasPartidas())
+        {
+            GameObject objetoBotonPartida = Instantiate(botonPlantillaPartida, contentScrollPartidas);
+            objetoBotonPartida.SetActive(true);
+
+            objetoBotonPartida.GetComponentInChildren<TMP_Text>().text = $"{partida.nombre} (Nivel {partida.nivel})";
+
+            Button botonPartida = objetoBotonPartida.GetComponent<Button>();
+            botonPartida.onClick.RemoveAllListeners();
+            botonPartida.onClick.AddListener(() => CargarPartida(partida.id));
+        }
+    }
+
+    private void CargarPartida(string id)
+    {
+        GestorPartidas.CargarPartida(id);
+        EC.escenasController.CargarEscenaComerciante();
+    }
+
+    void CrearPartida()
+    {
+        GestorPartidas.CrearNuevaPartida();
+        EC.escenasController.CargarEscenaComerciante();
     }
 }

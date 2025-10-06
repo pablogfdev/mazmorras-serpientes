@@ -1,29 +1,23 @@
 using UnityEngine;
+using EC = EscenasController;
+using PM = PrefabManager;
 
 public class SalidaMazmorra : MonoBehaviour
 {
     private GameObject jugador;
-    private GameObject jugardorPrefabs;
     private bool jugadorEnPuerta;
-    private GameObject juegoController;
 
-
-    void Awake()
-    {
-        juegoController = GameObject.FindWithTag("JuegoController");
-        jugardorPrefabs = Resources.Load<GameObject>("Prefabs/Jugador");
-        jugador = Instantiate(jugardorPrefabs);
-    }
-
+    void Awake() => jugador = Instantiate(PM.prefabManager.ObtenerPrefab("Jugador"));
+    
     private void Update()
     {
         if (jugadorEnPuerta && Input.GetKeyDown(KeyCode.E))
         {
-            //Con este codigo se puede subir de nivel sin haber terminado la mazmorra
-            //Arreglar en proximos commits cuando la estructura del proyecto este mas avanzada
-            //Se debe al condicional, se sube de nivel pero si no tiene la llave no se avanza
-            juegoController.GetComponent<ControlSubidaNivel>().SubirNivel(GameObject.FindWithTag("Mazmorra").GetComponentInChildren<MazmorraController>().Nivel);
-            if (jugador.GetComponent<JugadorController>().LlaveObtenida) juegoController.GetComponent<EscenasController>().CargarEscenaComerciante();    
+            if (jugador.GetComponent<JugadorController>().LlaveObtenida)
+            {
+                GestorPartidas.SubirNivel(GameObject.FindWithTag("Mazmorra").GetComponentInChildren<MazmorraController>().Nivel);
+                EC.escenasController.CargarEscenaComerciante();
+            }
             else { Debug.Log("El jugador no tiene la llave."); }
         }
     }

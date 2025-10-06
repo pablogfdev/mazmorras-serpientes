@@ -1,24 +1,17 @@
 using UnityEngine;
+using PJC = PausaJuegoController;
+using PM = PrefabManager;
 
 public class EntradaMazmorra : MonoBehaviour
 {
-    PausaJuegoController pausaJuegoController;
-    private GameObject menuNivel;
     private bool jugadorEnPuerta;
-
-    void Awake()
-    {
-        menuNivel = Resources.Load<GameObject>("Prefabs/CanvasMenuNiveles");
-        GameObject juegoController = GameObject.FindWithTag("JuegoController");
-        pausaJuegoController = juegoController.GetComponent<PausaJuegoController>();
-    }
 
     private void Update()
     {
-        if (jugadorEnPuerta && Input.GetKeyDown(KeyCode.E) && !pausaJuegoController.MenuNivelAbierto && !pausaJuegoController.JuegoPausado)
+        if (jugadorEnPuerta && Input.GetKeyDown(KeyCode.E) && !PJC.pausaJuegoController.MenuNivelAbierto && Time.timeScale != 0)
         {
-            Instantiate(menuNivel, transform.position, Quaternion.identity);
-            pausaJuegoController.ToggleMenuNiveles();
+            Instantiate(PM.prefabManager.ObtenerPrefab("MenuNivel"), transform.position, Quaternion.identity);
+            PJC.pausaJuegoController.ToggleMenuNiveles();
         }
     }
 

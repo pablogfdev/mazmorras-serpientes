@@ -48,5 +48,3 @@ public class DireccionEspadas : MonoBehaviour
         }
     }
 }
-
-//Revisado
