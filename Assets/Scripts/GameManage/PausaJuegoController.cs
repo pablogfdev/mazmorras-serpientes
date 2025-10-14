@@ -17,6 +17,7 @@ public class PausaJuegoController : MonoBehaviour
     private Button botonReanudarPausa;
 
     private bool esMenuPrincipal;
+    private bool esMenuCarga;
 
     private GameObject menuPausa;
 
@@ -28,7 +29,7 @@ public class PausaJuegoController : MonoBehaviour
 
     void Update()
     {
-        if (esMenuPrincipal) return;
+        if (esMenuPrincipal || esMenuCarga) return;
         if (!juegoPausado && Input.GetKeyDown(KeyCode.Space)) TogglePausa();
     }
 
@@ -36,6 +37,7 @@ public class PausaJuegoController : MonoBehaviour
     {
         Time.timeScale = 1f;
         esMenuPrincipal = escena.name == "MenuPrincipal";
+        esMenuCarga = escena.name == "Carga";
         if (esMenuPrincipal) return; 
         StartCoroutine(BuscarJugador());
         CrearMenu();

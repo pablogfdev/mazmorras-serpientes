@@ -4,8 +4,6 @@ using PM = PrefabManager;
 
 public class MazmorraController : MonoBehaviour
 {
-
-
     private int numeroHabitaciones = 10;
     private int nivel;
     public int Nivel { get => nivel; set => nivel = value; }

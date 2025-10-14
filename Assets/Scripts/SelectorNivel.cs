@@ -33,7 +33,6 @@ public class SelectorNivel : MonoBehaviour
         botonCerrar = menu.transform.Find("BotonCerrar").gameObject;
         zonaCierre = menu.transform.Find("ZonaCierre").gameObject;
         scrollLista = menu.GetComponentInChildren<ScrollRect>();
-        //ultimoNivelSuperado = juegoController.GetComponent<ControlSubidaNivel>().NivelMaximo;
         ultimoNivelSuperado = GestorPartidas.partidaActiva.nivel;
     }
 

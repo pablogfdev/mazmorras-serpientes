@@ -7,11 +7,8 @@ public class EscenasController : MonoBehaviour
 {
     public static EscenasController escenasController { get; private set; }
 
-    private GameObject mazmorra;
-
-    public void CargarEscenaMazmorras(int nivel) => StartCoroutine(CrearMazmorras(nivel));
-    public void CargarEscenaComerciante() => StartCoroutine(CrearComerciante());
-    public void CargarEscenaMenuPrincipal() => StartCoroutine(CrearMenuPrincipal());
+    private static string escenaDestino;
+    private static System.Action alFinalizar;
 
     void Awake()
     {
@@ -20,32 +17,84 @@ public class EscenasController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         escenasController = this;
         DontDestroyOnLoad(gameObject);
     }
 
-
-    IEnumerator CrearMazmorras(int nivel)
+    public void CargarEscenaMazmorras(int nivel)
     {
-        AsyncOperation procesoCarga = SceneManager.LoadSceneAsync("Mazmorras", LoadSceneMode.Single);
-        while (!procesoCarga.isDone) yield return null;
-        mazmorra = Instantiate(PM.prefabManager.ObtenerPrefab("Mazmorra"), Vector3.zero, Quaternion.identity);
-        mazmorra.GetComponent<MazmorraController>().Nivel = nivel;
-        mazmorra.GetComponent<MazmorraController>().CrearMazmorra();
+        alFinalizar = () =>
+        {
+            InstanciarElementosEscenaMazmorras(nivel);
+        };
+        escenaDestino = "Mazmorras";
+        StartCoroutine(CargarEscenaConProgreso());
     }
 
-    IEnumerator CrearComerciante()
+
+
+    public void CargarEscenaComerciante()
     {
-        AsyncOperation procesoCarga = SceneManager.LoadSceneAsync("Comerciante", LoadSceneMode.Single);
-        while (!procesoCarga.isDone) yield return null;
+        alFinalizar = () => { InstanciarElementosEscenaComerciante(); };
+        escenaDestino = "Comerciante";
+        StartCoroutine(CargarEscenaConProgreso());
+    }
+    
+    
+
+    public void CargarEscenaMenuPrincipal()
+    {
+        alFinalizar = null;
+        escenaDestino = "MenuPrincipal";
+        SceneManager.LoadScene(escenaDestino);
+    }
+
+    private IEnumerator CargarEscenaConProgreso()
+    {
+        yield return SceneManager.LoadSceneAsync("Carga");
+        yield return null;
+
+        if (CargaUI.cargaUI != null) CargaUI.cargaUI.ActualizarProgreso(0f);
+
+        AsyncOperation proceso = SceneManager.LoadSceneAsync(escenaDestino);
+        proceso.allowSceneActivation = false;
+
+        float progresoVisual = 0f;
+        float progresoReal = 0f;
+
+        while (proceso.progress < 0.9f)
+        {
+            progresoReal = Mathf.Clamp01(proceso.progress / 0.9f);
+            progresoVisual = Mathf.MoveTowards(progresoVisual, progresoReal, Time.deltaTime * 0.5f);
+            if (CargaUI.cargaUI != null) CargaUI.cargaUI.ActualizarProgreso(progresoVisual);
+            yield return null;
+        }
+
+        float timer = 0f;
+        while (timer < 1f)
+        {
+            progresoVisual = Mathf.MoveTowards(progresoVisual, 1f, Time.deltaTime);
+            if (CargaUI.cargaUI != null) CargaUI.cargaUI.ActualizarProgreso(progresoVisual);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        proceso.allowSceneActivation = true;
+        yield return null;
+        alFinalizar?.Invoke();
+    }
+    
+    void InstanciarElementosEscenaMazmorras(int nivel)
+    {
+        GameObject mazmorra = Instantiate(PM.prefabManager.ObtenerPrefab("Mazmorra"), Vector3.zero, Quaternion.identity);
+        MazmorraController mazmorraController = mazmorra.GetComponent<MazmorraController>();
+        mazmorraController.Nivel = nivel;
+        mazmorraController.CrearMazmorra();
+    }
+
+    void InstanciarElementosEscenaComerciante()
+    {
         Instantiate(PM.prefabManager.ObtenerPrefab("SalaPrincipal"), Vector3.zero, Quaternion.identity);
         Instantiate(PM.prefabManager.ObtenerPrefab("Jugador"), Vector3.zero, Quaternion.identity);
-    }
-
-    IEnumerator CrearMenuPrincipal()
-    {
-        AsyncOperation procesoCarga = SceneManager.LoadSceneAsync("MenuPrincipal", LoadSceneMode.Single);
-        while (!procesoCarga.isDone) yield return null;
     }
 }
