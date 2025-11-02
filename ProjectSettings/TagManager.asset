@@ -10,6 +10,7 @@ TagManager:
   - Mazmorra
   - JuegoController
   - Cofre
+  - Taquilla
   layers:
   - Default
   - TransparentFX

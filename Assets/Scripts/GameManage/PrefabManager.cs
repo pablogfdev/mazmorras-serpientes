@@ -16,8 +16,7 @@ public class PrefabManager : MonoBehaviour
         }
 
         prefabManager = this;
-        DontDestroyOnLoad(gameObject); // 👈 MUY IMPORTANTE
-
+        DontDestroyOnLoad(gameObject);
         CargarPrefabs();
     }
 

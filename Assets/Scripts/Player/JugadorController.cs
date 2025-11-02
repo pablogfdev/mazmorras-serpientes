@@ -4,6 +4,7 @@ using System.Collections;
 
 public class JugadorController : MonoBehaviour
 {
+    // Contemplar manejar la vida en un codigo aparte
     public bool LlaveObtenida { get; set; } = false;
     private int vidaBase = 100;
     private float vidaMaxima;
