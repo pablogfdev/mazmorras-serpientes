@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 
 public static class ItemDatabase
 {
@@ -14,5 +13,6 @@ public static class ItemDatabase
         RegistrarItem(new Item(3, "Oro", true));
         RegistrarItem(new Item(4, "Gema", true));
         RegistrarItem(new Item(5, "Vendas", true));
+        RegistrarItem(new Item(6, "Llave", false));
     }
 }

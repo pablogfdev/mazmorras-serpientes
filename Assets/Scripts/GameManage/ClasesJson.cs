@@ -5,11 +5,13 @@ using System.Collections.Generic;
 {
     public int id;
     public int cantidad;
+    public int slotIndex;
 
-    public ItemGuardado(int id, int cantidad)
+    public ItemGuardado(int id, int cantidad, int slotIndex)
     {
         this.id = id;
         this.cantidad = cantidad;
+        this.slotIndex = slotIndex;
     }
 }
 

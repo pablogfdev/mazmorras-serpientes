@@ -61,19 +61,22 @@ public static class GestorPartidas
     private static void GuardarInventario(InventarioController inventario, List<ItemGuardado> inventarioGuardado)
     {
         inventarioGuardado.Clear();
-        foreach (var slot in inventario.slots)
+        for (int i = 0; i < inventario.slots.Count; i++)
         {
+            ItemStack slot = inventario.slots[i];
             if (slot == null || slot.vacio || slot.item == null) continue;
-            inventarioGuardado.Add(new ItemGuardado(slot.item.Id, slot.cantidad));
+            inventarioGuardado.Add(new ItemGuardado(slot.item.Id, slot.cantidad, i));
         }
     }
     
     private static void CargarInventario(List<ItemGuardado> origen, InventarioController inventario)
     {
-        for (int i = 0; i < origen.Count && i < inventario.slots.Count; i++)
+        for (int i = 0; i < inventario.slots.Count; i++) inventario.slots[i] = new ItemStack(null, 0);
+        foreach (ItemGuardado itemGuardado in origen)
         {
-            var item = ItemDatabase.Get(origen[i].id);
-            inventario.slots[i] = new ItemStack(item, origen[i].cantidad);
+            if (itemGuardado.slotIndex < 0 || itemGuardado.slotIndex >= inventario.slots.Count) continue; 
+            Item item = ItemDatabase.Get(itemGuardado.id);
+            inventario.slots[itemGuardado.slotIndex] = new ItemStack(item, itemGuardado.cantidad);
         }
     }
 

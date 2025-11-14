@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,11 +23,13 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
     {
         inventario.slots.Clear();
 
-        foreach (var par in ItemDatabase.items)
+        foreach (KeyValuePair<int, Item> par in ItemDatabase.items)
         {
             Item item = par.Value;
             int cantidad = Random.Range(1, item.maxStack + 1);
             inventario.slots.Add(new ItemStack(item, cantidad));
         }
+
+        for (int i = 1; i <= 24; i++) inventario.slots.Add(new ItemStack(null, 0));       
     }
 }

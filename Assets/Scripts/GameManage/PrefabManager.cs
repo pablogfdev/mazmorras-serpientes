@@ -9,14 +9,7 @@ public class PrefabManager : MonoBehaviour
 
     void Awake()
     {
-        if (prefabManager != null && prefabManager != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        prefabManager = this;
-        DontDestroyOnLoad(gameObject);
+        if (prefabManager == null) prefabManager = this;
         CargarPrefabs();
     }
 
@@ -47,9 +40,10 @@ public class PrefabManager : MonoBehaviour
         CargarPrefab("VentanaPrincipal", "Prefabs/Menus/VentanaPrincipal");
 
         CargarPrefab("MenuPausa", "Prefabs/Menus/MenuPausa");
+        CargarPrefab("SlotInventario", "Prefabs/SlotInventario");
     }
 
     private void CargarPrefab(string clave, string ruta) => prefabs[clave] = Resources.Load<GameObject>(ruta);
     
-    public GameObject ObtenerPrefab(string clave) => prefabs.TryGetValue(clave, out var prefab) ? prefab : null;
+    public GameObject ObtenerPrefab(string clave) => prefabs.TryGetValue(clave, out GameObject prefab) ? prefab : null;
 }

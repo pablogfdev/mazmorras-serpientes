@@ -46,7 +46,7 @@ public class DetectorEnemigosController : MonoBehaviour
         enemigoMasCercano = enemigos[0];
         float distanciaMinima = Vector2.Distance(transform.position, enemigoMasCercano.transform.position);
 
-        foreach (var enemigo in enemigos)
+        foreach (EnemigoController enemigo in enemigos)
         {
             float distancia = Vector2.Distance(transform.position, enemigo.transform.position);
             if (distancia < distanciaMinima)

@@ -11,6 +11,7 @@ TagManager:
   - JuegoController
   - Cofre
   - Taquilla
+  - Salida
   layers:
   - Default
   - TransparentFX

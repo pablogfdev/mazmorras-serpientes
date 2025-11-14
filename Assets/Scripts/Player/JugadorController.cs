@@ -70,6 +70,9 @@ public class JugadorController : MonoBehaviour
         ActualizarVelocidad();
     }
 
+    public void BloquearMovimiento() => velocidadBase = 0f;
+    public void DesbloquearMovimiento() => velocidadBase = 5f;
+
     void ActualizarVelocidad()
     {
         float nuevaVelocidad = velocidadBase * (Input.GetKey(KeyCode.LeftShift) ? multiplicadorVelocidad : 1f);

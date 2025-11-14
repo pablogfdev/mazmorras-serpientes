@@ -10,12 +10,16 @@ public class Item
     public int maxStack = 20;
     public Action<JugadorController> efecto;
 
-    public Item(int id, string nombre, bool stackeable,Action<JugadorController> efecto = null)
+    public Item(
+        int id,
+        string nombre,
+        bool stackeable,
+        Action<JugadorController> efecto = null)
     {
-        this.id = id;
+        Id = id;
         this.nombre = nombre;
-        this.efecto = efecto;
         this.stackeable = stackeable;
+        this.efecto = efecto;
     }
 
     public void Usar(JugadorController jugador) => efecto?.Invoke(jugador);    
