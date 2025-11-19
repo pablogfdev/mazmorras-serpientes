@@ -5,8 +5,7 @@ public class IconoManager : MonoBehaviour
 {
     public static IconoManager iconoManager { get; private set; }
     private Dictionary<string, Sprite> iconos = new();
-
-    
+  
     void Awake()
     {   
         if (iconoManager == null) iconoManager = this;

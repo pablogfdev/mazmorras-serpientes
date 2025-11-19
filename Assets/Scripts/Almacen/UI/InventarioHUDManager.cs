@@ -4,10 +4,10 @@ using UnityEngine;
 public class InventarioHUDManager : MonoBehaviour
 {
     public static InventarioHUDManager inventarioHUDManager;
-    private InventarioUIController inventarioJugadorEnAlmacenUI;
-    private InventarioUIController inventarioJugadorUI;
-    private InventarioUIController inventarioAlmacenUI;
-    private AccesoRapidoUIController accesoRapidoUI;
+    public InventarioUIController inventarioJugadorEnAlmacenUI;
+    public InventarioUIController inventarioJugadorUI;
+    public InventarioUIController inventarioAlmacenUI;
+    public AccesoRapidoUIController accesoRapidoUI;
     public GameObject panelJugadorSolo;
     public GameObject panelJugador;
     public GameObject panelAlmacen;
@@ -57,6 +57,7 @@ public class InventarioHUDManager : MonoBehaviour
         panelJugadorSolo.SetActive(false);
         panelJugador.SetActive(false);
         panelAlmacen.SetActive(false);
-        panelAcceso.SetActive(false);
+        panelAcceso.SetActive(false);    
+        GestorPartidas.GuardarInventarios();
     }
 }

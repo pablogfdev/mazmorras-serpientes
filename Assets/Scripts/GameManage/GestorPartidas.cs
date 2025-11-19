@@ -39,6 +39,15 @@ public static class GestorPartidas
         }
     }
 
+    public static void GuardarInventarios()
+    {
+        if (partidaActiva == null || EscenasController.escenaDestino == "Mazmorras") return;
+
+        GuardarInventario(inventarioJugador, partidaActiva.inventarioJugador);
+        GuardarInventario(inventarioTaquilla, partidaActiva.inventarioTaquilla);
+
+        GuardarPartidasEnArchivo();
+    }
     public static List<Partida> ListasPartidas()
     {
         ObtenerPartidas();

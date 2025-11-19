@@ -6,8 +6,7 @@ using PM = PrefabManager;
 public class EscenasController : MonoBehaviour
 {
     public static EscenasController escenasController { get; private set; }
-
-    private static string escenaDestino;
+    public static string escenaDestino;
     private static System.Action alFinalizar;
 
     void Awake()

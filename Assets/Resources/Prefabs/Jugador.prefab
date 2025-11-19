@@ -789,7 +789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -5}
   m_SizeDelta: {x: 820, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1286256775056313575
@@ -842,11 +842,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b823c0521ee389549bf728c7e40e6d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filas: 5
-  columnas: 6
-  tamano: 130
-  espacio: -10
-  margen: 45
 --- !u!1 &3946631839415050885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,11 +1307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b823c0521ee389549bf728c7e40e6d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filas: 5
-  columnas: 6
-  tamano: 130
-  espacio: -10
-  margen: 45
 --- !u!1 &4537440781306190186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1691,7 @@ GameObject:
   - component: {fileID: 2830348899089077677}
   - component: {fileID: 29003130811495698}
   - component: {fileID: 136594657589938098}
-  - component: {fileID: 3734595124163190071}
+  - component: {fileID: 2230525455888931766}
   m_Layer: 5
   m_Name: Panel_acceso_rapido
   m_TagString: Untagged
@@ -1767,7 +1757,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3734595124163190071
+--- !u!114 &2230525455888931766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1779,11 +1769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448aa16d88ed84e428622b48f6589358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filas: 1
-  columnas: 6
-  tamano: 130
-  espacio: -8
-  margen: 40
 --- !u!1 &5072474493939255320
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,8 +3269,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b823c0521ee389549bf728c7e40e6d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filas: 5
-  columnas: 6
-  tamano: 130
-  espacio: -10
-  margen: 45
