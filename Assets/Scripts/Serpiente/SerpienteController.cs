@@ -31,6 +31,7 @@ public class SerpienteController : EnemigoController
     private Coroutine corrutinaDormir;
     private Coroutine corrutinaAlerta;
     private Coroutine corrutinaAtaque;
+    private Coroutine corrutinaVeneno;
 
     private Transform jugador;
     public Transform Jugador { set => jugador = value; }
@@ -131,6 +132,23 @@ public class SerpienteController : EnemigoController
         }
     }
 
+    private void IniciarCorrutinaVeneno(int cantidadIntervalo, float duracion)
+    {
+        if(corrutinaVeneno != null) StopCoroutine(corrutinaVeneno);
+        corrutinaVeneno = StartCoroutine(EnvenenarJugador(cantidadIntervalo, duracion));
+    }
+
+    private IEnumerator EnvenenarJugador(int cantidadPorSegundo, float duracion)
+    {
+        float tiempoPasado = 0;
+        while (tiempoPasado < duracion)
+        {
+            jugadorController.RecibirDanio(cantidadPorSegundo);
+            yield return new WaitForSeconds(1f);
+            tiempoPasado += 1f;
+        }
+    }
+
     IEnumerator SeguirJugador()
     {
         while (estadoActual == EstadoSerpiente.Alerta)
@@ -149,10 +167,11 @@ public class SerpienteController : EnemigoController
 
     IEnumerator Atacar()
     {
+        if(venenoso && !jugadorController.inmune) IniciarCorrutinaVeneno(10, 3);
         while (true)
         {
             yield return new WaitForSeconds(velocidadAtaque * 0.25f);
-            jugadorController.Vida -= 10;
+            jugadorController.RecibirDanio(10);
             yield return new WaitForSeconds(velocidadAtaque * 0.75f);
         }
     }

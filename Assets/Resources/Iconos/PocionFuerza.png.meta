@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 7a4fbe610670db146b36ef1056b666f0
+guid: 5435f24cb14cad846986a98b4d221edb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5727662577982465804
-    second: TaskBoxIcon_0
+      213: 8060462904378474931
+    second: PocionFuerza_0
+  - first:
+      213: -5817214617219877575
+    second: PocionFuerza_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,9 +49,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TaskBoxIcon_0
+      name: PocionFuerza_0
       rect:
         serializedVersion: 2
-        x: 57
-        y: 9
-        width: 333
-        height: 346
+        x: 0
+        y: 12
+        width: 13
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c0761f9a4cebc7f40800000000000000
-      internalID: 5727662577982465804
+      spriteID: 3b141bc2e448cdf60800000000000000
+      internalID: 8060462904378474931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PocionFuerza_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 109
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9353666602a154fa0800000000000000
+      internalID: -5817214617219877575
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TaskBoxIcon_0: 5727662577982465804
+      PocionFuerza_0: 8060462904378474931
+      PocionFuerza_1: -5817214617219877575
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

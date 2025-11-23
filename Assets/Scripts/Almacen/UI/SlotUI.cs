@@ -10,21 +10,23 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
     private Image icono;
     private TextMeshProUGUI textoCantidad;
     private TextMeshProUGUI textoCantidadSombra;
+    private Image imagenCuentaAtras;
 
     private Canvas canvas;
     private GameObject iconoDeArrastre;
+    private bool enArrastre = false;
+    private static List<SlotUI> SlotsEnArrastre = new();
+
+    private AccionProlongadaController accionProlongadaController;
 
     private List<ItemStack> inventarioSlot;
     private int indice;
-    private bool enArrastre = false;
-
-    private static List<SlotUI> SlotsEnArrastre = new();
 
     private InventarioBaseUI inventarioOrigen;
     private InventarioBaseUI inventarioDestino;
+    private JugadorController jugador;
 
-    private ItemStack StackActual => (inventarioSlot != null && indice < inventarioSlot.Count) ? inventarioSlot[indice] : null;
-
+    public ItemStack StackActual => (inventarioSlot != null && indice < inventarioSlot.Count) ? inventarioSlot[indice] : null;
 
     private void Awake()
     {
@@ -33,11 +35,16 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
         if (textoCantidad == null) textoCantidad = icono.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
         if (textoCantidadSombra == null) textoCantidadSombra = icono.transform.Find("Cantidad_sombra").GetComponent<TextMeshProUGUI>();
         inventarioOrigen = GetComponentInParent<InventarioBaseUI>();
+        jugador = GetComponentInParent<JugadorController>();
+        imagenCuentaAtras = icono.transform.Find("RelojProgreso").GetComponent<Image>();
+        imagenCuentaAtras.fillAmount = 0f;
+        imagenCuentaAtras.enabled = false;
+        accionProlongadaController = gameObject.AddComponent<AccionProlongadaController>();
     }
 
     public void SetInventario(List<ItemStack> inventario, int indice)
     {
-        this.inventarioSlot = inventario;
+        inventarioSlot = inventario;
         this.indice = indice;
         ActualizarUI();
     }
@@ -62,41 +69,61 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) return;
-        ItemStack stackOrigen = StackActual;
-        if (stackOrigen == null || stackOrigen.vacio) return;
-        ElegirInventarioDestino();
-        MoverStackInstantaneo(stackOrigen);
-        ActualizarUI();
-        inventarioDestino.ActualizarInventario(inventarioDestino.inventario);
+        ItemStack stack = StackActual;
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            if (stack == null || stack.vacio) return;
+            if (ElegirInventarioDestino() == false) return;
+            MoverStackInstantaneo(stack);
+            ActualizarUI();
+            inventarioDestino.ActualizarInventario(inventarioDestino.inventario);
+            return;
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (stack == null || stack.vacio || stack.item.efecto == null) return;
+         
+            accionProlongadaController.ActivarCorrutinaBarra(
+                stack.item.tiempoDeEspera.Value,
+                jugador,
+                this, 
+                () =>
+                {
+                    stack.item.efecto?.Invoke(jugador);
+                    stack.cantidad--;
+                    if (stack.cantidad <= 0)inventarioSlot[indice] = new ItemStack(null, 0);
+                    ActualizarUI();
+                    GestorPartidas.GuardarInventarios();
+                }
+            );
+            return;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (enArrastre) return;
+        if (enArrastre ||accionProlongadaController.corrutinaReloj != null) return;
 
         ItemStack stack = StackActual;
         if (stack == null || stack.vacio) return;
         if (!SlotsEnArrastre.Contains(this)) SlotsEnArrastre.Add(this);
-        foreach (var slot in new List<SlotUI>(SlotsEnArrastre))
-        {
-            if (slot != this && slot.StackActual == stack) slot.ForzarCerrarDrag();
-        }
+        foreach (var slot in new List<SlotUI>(SlotsEnArrastre)) if (slot != this && slot.StackActual == stack) slot.ForzarCerrarIconoArraste();
 
         enArrastre = true;
-
         iconoDeArrastre = new GameObject("iconoDeArrastre");
         iconoDeArrastre.transform.SetParent(canvas.transform, false);
         iconoDeArrastre.transform.SetAsLastSibling();
 
-        Image img = iconoDeArrastre.AddComponent<Image>();
-        img.sprite = icono.sprite;
-        img.raycastTarget = false;
-        img.SetNativeSize();
+        Image imagen = iconoDeArrastre.AddComponent<Image>();
+        imagen.sprite = icono.sprite;
+        imagen.raycastTarget = false;
+        imagen.SetNativeSize();
 
-        CanvasGroup cg = iconoDeArrastre.AddComponent<CanvasGroup>();
-        cg.blocksRaycasts = false;
-        cg.alpha = 0.8f;
+        CanvasGroup arrastreCanvasGroup = iconoDeArrastre.AddComponent<CanvasGroup>();
+        arrastreCanvasGroup.blocksRaycasts = false;
+        arrastreCanvasGroup.alpha = 0.8f;
 
         iconoDeArrastre.transform.position = eventData.position;
     }
@@ -105,7 +132,7 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
 
     public void OnEndDrag(PointerEventData eventData)
     {
-
+        if(accionProlongadaController.corrutinaReloj != null) return;
         if (iconoDeArrastre != null)
         {
             Destroy(iconoDeArrastre);
@@ -120,14 +147,22 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
         {
             int cantidadAMover = StackActual.cantidad;
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) cantidadAMover = Mathf.CeilToInt(StackActual.cantidad / 2f);
-            if (eventData.button == PointerEventData.InputButton.Right) cantidadAMover = 1;
-            MoverOApilar(destino, cantidadAMover);
+            if (Input.GetKey(KeyCode.Z)) cantidadAMover = 1;
+            if(accionProlongadaController.corrutinaReloj == null) MoverStack(destino, cantidadAMover);
         }
-
-        
     }
 
-    private void MoverOApilar(SlotUI destino, int cantidadAMover)
+    public void ForzarCerrarIconoArraste()
+    {
+        if (iconoDeArrastre != null)
+        {
+            Destroy(iconoDeArrastre);
+            iconoDeArrastre = null;
+        }
+        SlotsEnArrastre.Remove(this);
+    }
+
+    private void MoverStack(SlotUI destino, int cantidadAMover)
     {
         var stackOrigen = StackActual;
         var stackDestino = destino.StackActual;
@@ -162,17 +197,7 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
         destino.ActualizarUI();
     }
 
-    public void ForzarCerrarDrag()
-    {
-        if (iconoDeArrastre != null)
-        {
-            Destroy(iconoDeArrastre);
-            iconoDeArrastre = null;
-        }
-        SlotsEnArrastre.Remove(this);
-    }
-
-    private void ElegirInventarioDestino()
+    private bool ElegirInventarioDestino()
     {
         switch (inventarioOrigen.name)
         {
@@ -184,12 +209,10 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
                 inventarioDestino = InventarioHUDManager.inventarioHUDManager.inventarioAlmacenUI;
                 break;
 
-            case "Panel_inventario_Jugador":
-                return;
-
-            case "Panel_acceso_rapido":
-                return;
+            case "Panel_inventario_Jugador": break;
+            case "Panel_acceso_rapido": break;
         }
+        return inventarioDestino != null;
     }
 
     private void MoverStackInstantaneo(ItemStack stackOrigen)
@@ -205,7 +228,6 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
 
                 destinoStack.cantidad += mover;
                 stackOrigen.cantidad -= mover;
-
                 continue;
             }
 
@@ -214,9 +236,7 @@ public class SlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
             {
                 inventarioDestino.inventario[indiceSlotVacio] = new ItemStack(stackOrigen.item, stackOrigen.cantidad);
                 stackOrigen.cantidad = 0;
-                break;
             }
-
             break;
         }
     }

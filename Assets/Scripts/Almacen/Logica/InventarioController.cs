@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class InventarioController
 {
-    private int tamano;
+    public int tamano;
     public List<ItemStack> slots;
 
     public InventarioController(int t = 30)

@@ -16,6 +16,13 @@ public class IconoManager : MonoBehaviour
     {
         CargarIcono("Oro", "Iconos/Oro");
         CargarIcono("Llave", "Iconos/Llave");
+        CargarIcono("Vendas", "Iconos/Vendas");
+        CargarIcono("Botiquin", "Iconos/Botiquin");
+        CargarIcono("Pocion de Velocidad", "Iconos/PocionVelocidad");
+        CargarIcono("Pocion de Fuerza", "Iconos/PocionFuerza");
+        CargarIcono("Pocion de Vida", "Iconos/PocionVida");
+        CargarIcono("Pocion de Defensa", "Iconos/PocionDefensa");
+        CargarIcono("Antidoto", "Iconos/Antidoto");
     }
 
     private void CargarIcono(string clave, string ruta) => iconos[clave] = Resources.Load<Sprite>(ruta);

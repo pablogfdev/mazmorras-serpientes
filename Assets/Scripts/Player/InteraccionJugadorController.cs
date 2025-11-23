@@ -43,7 +43,7 @@ public class InteraccionJugadorController : MonoBehaviour
         return;
     }
 
-    void AccionarEntradaMazmorra()
+    void AccionarEntradaMazmorra()  //Rediseñar
     {
         if (!PJC.pausaJuegoController.MenuNivelAbierto && Time.timeScale != 0f)
         {
@@ -51,7 +51,7 @@ public class InteraccionJugadorController : MonoBehaviour
             PJC.pausaJuegoController.ToggleMenuNiveles();
             return;
         }
-        HUD.inventarioHUDManager.CerrarInventarios();
+        //HUD.inventarioHUDManager.CerrarInventarios();
         return;
     }
 

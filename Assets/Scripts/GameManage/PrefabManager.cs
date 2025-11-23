@@ -41,6 +41,8 @@ public class PrefabManager : MonoBehaviour
 
         CargarPrefab("MenuPausa", "Prefabs/Menus/MenuPausa");
         CargarPrefab("SlotInventario", "Prefabs/SlotInventario");
+
+        CargarPrefab("BarraEfecto", "Prefabs/BarraEfecto");
     }
 
     private void CargarPrefab(string clave, string ruta) => prefabs[clave] = Resources.Load<GameObject>(ruta);

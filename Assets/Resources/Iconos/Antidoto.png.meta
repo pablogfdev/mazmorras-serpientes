@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2170132a3e45c5c489129d640975ac06
+guid: 4a4090ac39ea7d44296afd0e8a0a6c36
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4474307608797626614
-    second: llave-removebg-preview_0
+      213: -4702205776142315033
+    second: Antidoto_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: llave-removebg-preview_0
+      name: Antidoto_0
       rect:
         serializedVersion: 2
-        x: 53
-        y: 24
-        width: 79
-        height: 134
+        x: 30
+        y: 3
+        width: 64
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6f0c536701fe71e30800000000000000
-      internalID: 4474307608797626614
+      spriteID: 7e15f3c82c86ebeb0800000000000000
+      internalID: -4702205776142315033
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      llave-removebg-preview_0: 4474307608797626614
+      Antidoto_0: -4702205776142315033
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

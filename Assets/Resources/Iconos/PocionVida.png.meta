@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 2170132a3e45c5c489129d640975ac06
+guid: 19f9d555fd250b64fbfc87e73579f0c1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4474307608797626614
-    second: llave-removebg-preview_0
+      213: 6991690097665705131
+    second: PocionVida_0
+  - first:
+      213: 3201962184573625904
+    second: PocionVida_1
+  - first:
+      213: -1352014059151655328
+    second: PocionVida_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: llave-removebg-preview_0
+      name: PocionVida_0
       rect:
         serializedVersion: 2
-        x: 53
-        y: 24
-        width: 79
-        height: 134
+        x: 0
+        y: 58
+        width: 5
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6f0c536701fe71e30800000000000000
-      internalID: 4474307608797626614
+      spriteID: ba40bfaa919770160800000000000000
+      internalID: 6991690097665705131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PocionVida_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 90
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 036aeb364a7af6c20800000000000000
+      internalID: 3201962184573625904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PocionVida_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 13
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06e7ee0606eac3de0800000000000000
+      internalID: -1352014059151655328
       vertices: []
       indices: 
       edges: []
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      llave-removebg-preview_0: 4474307608797626614
+      PocionVida_0: 6991690097665705131
+      PocionVida_1: 3201962184573625904
+      PocionVida_2: -1352014059151655328
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

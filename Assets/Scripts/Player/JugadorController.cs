@@ -16,6 +16,7 @@ public class JugadorController : MonoBehaviour
         set
         {
             vida = value;
+            if (vida >= 100) vida = 100;
             if (vida <= 0) EventoMuerte?.Invoke();
             eventoCambioBarraVida?.Invoke(vida);
         }
@@ -23,6 +24,7 @@ public class JugadorController : MonoBehaviour
 
     private float velocidadBase = 5f;
     private float multiplicadorVelocidad = 2f;
+    private float velocidadExtra = 1;
     private float velocidadMovimiento;
     public float VelocidadMovimiento
     {
@@ -35,6 +37,12 @@ public class JugadorController : MonoBehaviour
         }
     }
 
+    public float danioExtra = 1;
+    public int danioEstocada = 20;
+    public int danioBarrido = 5;
+    private float defensa = 1;
+    public bool inmune = false;
+
     public Rigidbody2D rb { get; private set; }
 
     public event Action<float> eventoCambioVelocidad;
@@ -43,6 +51,11 @@ public class JugadorController : MonoBehaviour
 
     private GameObject espadaPrimaria;
     private GameObject espadaSecundaria;
+    private Coroutine corrutinaVelocidad;
+    private Coroutine corrutinaDanio;
+    private Coroutine corrutinaInmunidad;
+    private Coroutine corrutinaDefensa;
+    private Coroutine corrutinaCuracion;
 
     void Awake()
     {
@@ -63,33 +76,114 @@ public class JugadorController : MonoBehaviour
         };
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && !espadaPrimaria.activeSelf && !espadaSecundaria.activeSelf) StartCoroutine(DarEstocada());
-        if (Input.GetMouseButtonDown(1) && !espadaPrimaria.activeSelf && !espadaSecundaria.activeSelf) StartCoroutine(DarBarrido());
-        ActualizarVelocidad();
-    }
+    void Update() => ActualizarVelocidad();
+
 
     public void BloquearMovimiento() => velocidadBase = 0f;
     public void DesbloquearMovimiento() => velocidadBase = 5f;
 
     void ActualizarVelocidad()
     {
-        float nuevaVelocidad = velocidadBase * (Input.GetKey(KeyCode.LeftShift) ? multiplicadorVelocidad : 1f);
+        float nuevaVelocidad = velocidadBase * (Input.GetKey(KeyCode.LeftShift) ? multiplicadorVelocidad : 1f) * velocidadExtra;
         VelocidadMovimiento = nuevaVelocidad;
     }
 
-    IEnumerator DarEstocada()
+
+    public void RecibirDanio(float cantidad)
     {
+        float danioReducido = Mathf.RoundToInt(cantidad * defensa);
+        Vida -= danioReducido;
+    }
+
+    public void IniciarEstocada() => StartCoroutine(DarEstocada());
+    public void IniciarBarrido() => StartCoroutine(DarBarrido());
+
+    private IEnumerator DarEstocada()
+    {
+        if (espadaPrimaria.activeSelf || espadaSecundaria.activeSelf) yield break;
         espadaPrimaria.SetActive(true);
         yield return new WaitForSeconds(0.33f);
         espadaPrimaria.SetActive(false);
     }
 
-    IEnumerator DarBarrido()
+    private IEnumerator DarBarrido()
     {
+        if (espadaPrimaria.activeSelf || espadaSecundaria.activeSelf) yield break;
         espadaSecundaria.SetActive(true);
         yield return new WaitForSeconds(0.33f);
         espadaSecundaria.SetActive(false);
+    }
+
+    public void AumentarVelocidad(float velocidadExtra, float duracion)
+    {
+        if (corrutinaVelocidad != null) StopCoroutine(corrutinaVelocidad);
+        corrutinaVelocidad = StartCoroutine(IniciarCorrutinaVelocidad(velocidadExtra, duracion));
+    }
+
+    private IEnumerator IniciarCorrutinaVelocidad(float velocidadExtra, float duracion)
+    {
+        this.velocidadExtra = velocidadExtra;
+        BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Velocidad"), duracion);
+        yield return new WaitForSeconds(duracion);
+        this.velocidadExtra = 1f;
+    }
+
+    public void AumentarDanio(float danioExtra, float duracion)
+    {
+        if (corrutinaDanio != null) StopCoroutine(corrutinaDanio);
+        corrutinaDanio = StartCoroutine(PotenciarDanio(danioExtra, duracion));
+    }
+
+    private IEnumerator PotenciarDanio(float danioExtra, float duracion)
+    {
+        this.danioExtra = Mathf.RoundToInt(danioExtra);
+        BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Fuerza"), duracion);
+        yield return new WaitForSeconds(duracion);
+        this.danioExtra = 1f;
+    }
+
+    public void RegenerarVida(int vidaExtraPorIntervalo, float duracion)
+    {
+        if (corrutinaCuracion != null) StopCoroutine(corrutinaCuracion);
+        corrutinaCuracion = StartCoroutine(CurarVida(vidaExtraPorIntervalo, duracion));
+    }
+
+    private IEnumerator CurarVida(int vidaExtraPorIntervalo, float duracion)
+    {
+        float tiempoPasado = 0f;
+        while (tiempoPasado < duracion)
+        {
+            Vida += vidaExtraPorIntervalo;
+            yield return new WaitForSeconds(1f);
+            tiempoPasado += 1f;
+        }
+    }
+
+    public void ObtenerInmunidad(float duracion)
+    {
+        if (corrutinaInmunidad != null) StopCoroutine(corrutinaInmunidad);
+        corrutinaInmunidad = StartCoroutine(DarInmunidad(duracion));
+    }
+
+    private IEnumerator DarInmunidad(float duracion)
+    {
+        inmune = true;
+        BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Antidoto"), duracion);
+        yield return new WaitForSeconds(duracion);
+        inmune = false;
+    }
+
+    public void AumentarDefensa(float defensaExtra, float duracion)
+    {
+        if (corrutinaDefensa != null) StopCoroutine(corrutinaDefensa);
+        corrutinaDefensa = StartCoroutine(AplicarDefensa(defensaExtra, duracion));
+    }
+
+    private IEnumerator AplicarDefensa(float defensaExtra, float duracion)
+    {
+        defensa = defensaExtra;
+        BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Defensa"), duracion);
+        yield return new WaitForSeconds(duracion);
+        defensa = 1f;
     }
 }

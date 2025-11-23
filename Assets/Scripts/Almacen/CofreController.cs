@@ -30,6 +30,6 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
             inventario.slots.Add(new ItemStack(item, cantidad));
         }
 
-        for (int i = 1; i <= 24; i++) inventario.slots.Add(new ItemStack(null, 0));       
+        for (int i = 1; i <= inventario.tamano - ItemDatabase.items.Count; i++) inventario.slots.Add(new ItemStack(null, 0));       
     }
 }

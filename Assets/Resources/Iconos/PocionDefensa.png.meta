@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2170132a3e45c5c489129d640975ac06
+guid: 201ff10ff2f2ac8478be57355cdc6dbd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4474307608797626614
-    second: llave-removebg-preview_0
+      213: -3657844858574207844
+    second: PocionDefensa_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: llave-removebg-preview_0
+      name: PocionDefensa_0
       rect:
         serializedVersion: 2
-        x: 53
-        y: 24
-        width: 79
-        height: 134
+        x: 27
+        y: 6
+        width: 68
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6f0c536701fe71e30800000000000000
-      internalID: 4474307608797626614
+      spriteID: c9402313b79bc3dc0800000000000000
+      internalID: -3657844858574207844
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      llave-removebg-preview_0: 4474307608797626614
+      PocionDefensa_0: -3657844858574207844
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

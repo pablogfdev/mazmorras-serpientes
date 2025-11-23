@@ -5,12 +5,14 @@ public class AtaquePrimario : MonoBehaviour
     private EnemigoController enemigo;
     private bool ataqueEjecutado = false;
     private BarraVidaObjetivoController barraVida;
+    private JugadorController jugador;
 
     private void OnEnable() => ataqueEjecutado = false;
 
 
     void Awake()
     {
+        jugador = gameObject.GetComponentInParent<JugadorController>();
         barraVida = GameObject.FindWithTag("Player")
             .transform.Find("BarraVidaObjetivo")
             .GetComponent<BarraVidaObjetivoController>();
@@ -21,7 +23,7 @@ public class AtaquePrimario : MonoBehaviour
         if (ataqueEjecutado) return;
         if (!other.CompareTag("Enemigo")) return;
         enemigo = barraVida.Enemigo;
-        if (enemigo != null) enemigo.Vida -= 20;
+        if (enemigo != null) enemigo.Vida -= jugador.danioEstocada * jugador.danioExtra;
         ataqueEjecutado = true;
     }
 }
