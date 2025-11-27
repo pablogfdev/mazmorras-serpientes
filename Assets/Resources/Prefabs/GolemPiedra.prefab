@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1254555172617801816}
   m_Layer: 0
   m_Name: GolemPiedra
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,12 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6733fe2c5d49ff4b9f8d2b40b4d7ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadBase: 2
-  distanciaDeteccionPared: 3
-  tiempoQuietoMin: 3
-  tiempoQuietoMax: 6
-  tiempoMovimientoMin: 2
-  tiempoMovimientoMax: 5
 --- !u!114 &1254555172617801816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,3 +178,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13ae69c5d372e847b91499e3f55bd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotacionSpeed: 180

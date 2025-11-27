@@ -11,7 +11,8 @@ public class HabitacionController : MonoBehaviour
 
     private int numCofres;
     private int numSerpientes;
-    private int numGolenPiedra;
+    private int numGolems;
+    private int numEspiritus;
     private MazmorraController mazmorra;
 
     float distancia = 2f;
@@ -48,7 +49,8 @@ public class HabitacionController : MonoBehaviour
 
         numCofres = Random.Range(1, 1 + (nivel / 3) + 1);
         numSerpientes = Random.Range(nivel / 2, nivel / 2 + 2);
-        numGolenPiedra = Random.Range(nivel / 2, nivel / 2 + 2);
+        numGolems = Random.Range(nivel / 2, nivel / 2 + 2);
+        numEspiritus = Random.Range(nivel / 2, nivel / 2 + 2);
     }
 
 
@@ -86,7 +88,8 @@ public class HabitacionController : MonoBehaviour
     {
         for (int i = 0; i < numCofres; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Cofre")); }
         for (int i = 0; i < numSerpientes; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Serpiente")); }
-        for (int i = 0; i < numGolenPiedra; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("GolemPiedra")); }
+        for (int i = 0; i < numGolems; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("GolemPiedra")); }
+        for (int i = 0; i < numEspiritus; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Espiritu")); }
     }
 
     void colocarEntidadEnPosicioValida(GameObject prefab)

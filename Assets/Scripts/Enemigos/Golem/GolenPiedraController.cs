@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public enum EstadoGolen
+public enum EstadoGolem
 {
     Quieto,
     Movimiento
 }
 
-public class GolenPiedraController : EnemigoController
+public class GolemPiedraController : EnemigoController
 {
     private float velocidadBase = 2f;
     private float distanciaDeteccionPared = 1f;
@@ -18,16 +18,16 @@ public class GolenPiedraController : EnemigoController
     private bool ataque = false;
     private int danio = 10;
 
-    private EstadoGolen estadoActual;
-    public EstadoGolen EstadoActual
+    private EstadoGolem estadoActual;
+    public EstadoGolem EstadoActual
     {
         get => estadoActual;
         set
         {
             estadoActual = value;
             CancelarCorrutinas();
-            if (estadoActual == EstadoGolen.Movimiento) corrutinaMovimiento = StartCoroutine(Mover());
-            else if (estadoActual == EstadoGolen.Quieto) corrutinaQuieto = StartCoroutine(Esperar());
+            if (estadoActual == EstadoGolem.Movimiento) corrutinaMovimiento = StartCoroutine(Mover());
+            else if (estadoActual == EstadoGolem.Quieto) corrutinaQuieto = StartCoroutine(Esperar());
         }
     }
 
@@ -42,17 +42,17 @@ public class GolenPiedraController : EnemigoController
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (jugador != null)
         CambiarDireccionAleatoria();
-        EstadoActual = EstadoGolen.Quieto;
+        EstadoActual = (Random.value < 0.5f) ? EstadoGolem.Movimiento : EstadoGolem.Quieto;
     }
 
     IEnumerator Esperar()
     {
         float tiempo = Random.Range(tiempoQuietoMin, tiempoQuietoMax);
         yield return new WaitForSeconds(tiempo);
-        EstadoActual = EstadoGolen.Movimiento;
+        EstadoActual = EstadoGolem.Movimiento;
     }
 
-    IEnumerator Mover()
+    IEnumerator Mover()     //Hacer el revote reflejado si hay tiempo
     {
         float tiempoMovimiento = Random.Range(tiempoMovimientoMin, tiempoMovimientoMax);
         float tiempoPasado = 0f;
@@ -77,7 +77,7 @@ public class GolenPiedraController : EnemigoController
             yield return null;
         }
 
-        EstadoActual = EstadoGolen.Quieto;
+        EstadoActual = EstadoGolem.Quieto;
     }
 
     void CambiarDireccionAleatoria()
@@ -87,9 +87,9 @@ public class GolenPiedraController : EnemigoController
         direccionAleatoria = new Vector3(Mathf.Cos(radio), Mathf.Sin(radio), 0f).normalized;
     }
     
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && estadoActual == EstadoGolen.Movimiento && !ataque)
+        if (other.CompareTag("Player") && estadoActual == EstadoGolem.Movimiento && !ataque)
         {
             jugador = other.gameObject.transform;
             StartCoroutine(DaniarJugador());

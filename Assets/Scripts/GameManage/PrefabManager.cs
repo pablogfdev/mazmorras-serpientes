@@ -45,6 +45,9 @@ public class PrefabManager : MonoBehaviour
         CargarPrefab("BarraEfecto", "Prefabs/BarraEfecto");
 
         CargarPrefab("GolemPiedra", "Prefabs/GolemPiedra");
+        CargarPrefab("Espiritu", "Prefabs/Espiritu");
+        CargarPrefab("DetectorEspiritu", "Prefabs/DetectorEspiritu");
+        CargarPrefab("ProyectilEspiritu", "Prefabs/ProyectilEspiritu"); 
     }
 
     private void CargarPrefab(string clave, string ruta) => prefabs[clave] = Resources.Load<GameObject>(ruta);

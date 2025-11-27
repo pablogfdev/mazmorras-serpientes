@@ -12,6 +12,7 @@ TagManager:
   - Cofre
   - Taquilla
   - Salida
+  - Pared
   layers:
   - Default
   - TransparentFX

@@ -841,7 +841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f171a3669280b5a47848d10092ce2241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jugador: {fileID: 0}
 --- !u!1 &3822974556058497469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,9 +1746,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6805e9ae6be496d4ca255c5a2901acd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  danioExtra: 1
   danioEstocada: 20
   danioBarrido: 5
-  potenciadorFuerza: 1
   inmune: 0
 --- !u!114 &5074585801210984549
 MonoBehaviour:
@@ -2494,7 +2493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f171a3669280b5a47848d10092ce2241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jugador: {fileID: 0}
 --- !u!114 &828457395015796039
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,13 +7,13 @@ public class GolemSpriteController : MonoBehaviour
     private Sprite spriteGolem;   
     private string[] direcciones = { "Sur", "Norte", "Este", "Oeste" };
     public float rotacionSpeed = 180f; 
-    private GolenPiedraController golenController; 
+    private GolemPiedraController golemController; 
     private Coroutine corrutinaRotacion;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        golenController = GetComponent<GolenPiedraController>();
+        golemController = GetComponent<GolemPiedraController>();
     }
 
     void Start()
@@ -25,7 +25,7 @@ public class GolemSpriteController : MonoBehaviour
 
     void Update()
     {
-        if (golenController.EstadoActual == EstadoGolen.Movimiento)
+        if (golemController.EstadoActual == EstadoGolem.Movimiento)
         {
             if (corrutinaRotacion != null)
             {
@@ -33,10 +33,10 @@ public class GolemSpriteController : MonoBehaviour
                 corrutinaRotacion = null;
             }
 
-            spriteRenderer.sprite = SpriteManager.Instancia.ObtenerSprite("Golem_Rotacion");;
+            spriteRenderer.sprite = SpriteManager.Instancia.ObtenerSprite("Golem_Bola");;
             transform.Rotate(0f, 0f, rotacionSpeed * Time.deltaTime);
         }
-        else if (golenController.EstadoActual == EstadoGolen.Quieto)
+        else if (golemController.EstadoActual == EstadoGolem.Quieto)
         {
             if (corrutinaRotacion == null)
             {
@@ -48,7 +48,7 @@ public class GolemSpriteController : MonoBehaviour
 
     private IEnumerator RotarSprite()
     {
-        while (golenController.EstadoActual == EstadoGolen.Quieto)
+        while (golemController.EstadoActual == EstadoGolem.Quieto)
         {
             string nuevaDireccion;
             do
