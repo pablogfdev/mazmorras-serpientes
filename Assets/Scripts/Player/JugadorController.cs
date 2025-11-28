@@ -5,7 +5,6 @@ using System.Collections;
 public class JugadorController : MonoBehaviour
 {
     // Contemplar manejar la vida en un codigo aparte
-    public bool LlaveObtenida { get; set; } = false;
     private int vidaBase = 100;
     private float vidaMaxima;
     public float VidaMaxima { get => vidaMaxima; }
@@ -16,7 +15,7 @@ public class JugadorController : MonoBehaviour
         set
         {
             vida = value;
-            if (vida >= 100) vida = 100;
+            if (vida >= vidaBase) vida = vidaBase;
             if (vida <= 0) EventoMuerte?.Invoke();
             eventoCambioBarraVida?.Invoke(vida);
         }

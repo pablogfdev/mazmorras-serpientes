@@ -19,7 +19,7 @@ public class GolemSpriteController : MonoBehaviour
     void Start()
     {
         string direccionAleatoria = direcciones[Random.Range(0, direcciones.Length)];
-        spriteGolem = SpriteManager.Instancia.ObtenerSprite($"Golem_{direccionAleatoria}");
+        spriteGolem = SpriteManager.spriteManager.ObtenerSprite($"Golem_{direccionAleatoria}");
         spriteRenderer.sprite = spriteGolem;
     }
 
@@ -33,7 +33,7 @@ public class GolemSpriteController : MonoBehaviour
                 corrutinaRotacion = null;
             }
 
-            spriteRenderer.sprite = SpriteManager.Instancia.ObtenerSprite("Golem_Bola");;
+            spriteRenderer.sprite = SpriteManager.spriteManager.ObtenerSprite("Golem_Bola");;
             transform.Rotate(0f, 0f, rotacionSpeed * Time.deltaTime);
         }
         else if (golemController.EstadoActual == EstadoGolem.Quieto)
@@ -54,14 +54,14 @@ public class GolemSpriteController : MonoBehaviour
             do
             {
                 nuevaDireccion = direcciones[Random.Range(0, direcciones.Length)];
-            } while (spriteRenderer.sprite == SpriteManager.Instancia.ObtenerSprite($"Golem_{nuevaDireccion}"));
+            } while (spriteRenderer.sprite == SpriteManager.spriteManager.ObtenerSprite($"Golem_{nuevaDireccion}"));
 
-            spriteRenderer.sprite = SpriteManager.Instancia.ObtenerSprite($"Golem_{nuevaDireccion}");
+            spriteRenderer.sprite = SpriteManager.spriteManager.ObtenerSprite($"Golem_{nuevaDireccion}");
             float espera = Random.Range(1f, 3f);
             yield return new WaitForSeconds(espera);
         }
 
-        spriteGolem = SpriteManager.Instancia.ObtenerSprite($"Golem_{direcciones[Random.Range(0, direcciones.Length)]}");
+        spriteGolem = SpriteManager.spriteManager.ObtenerSprite($"Golem_{direcciones[Random.Range(0, direcciones.Length)]}");
         spriteRenderer.sprite = spriteGolem;
         corrutinaRotacion = null;
     }

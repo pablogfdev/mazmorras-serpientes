@@ -10,6 +10,8 @@ public class Item
     public int maxStack;
     public float? tiempoDeEspera;
     public Action<JugadorController> efecto;
+    public float probabilidadAparacición = 1f; 
+    public int nivelAparicion = 1; 
 
     public Item(
         int id,
@@ -17,7 +19,9 @@ public class Item
         bool stackeable,
         int maxStack,
         float? tiempoDeEspera = null,
-        Action<JugadorController> efecto = null)
+        Action<JugadorController> efecto = null,
+        float probabilidadAparacición = 1f,
+        int nivelMinDrop = 1)
     {
         Id = id;
         this.nombre = nombre;
@@ -25,6 +29,8 @@ public class Item
         this.maxStack = stackeable ? maxStack : 1;
         this.tiempoDeEspera = tiempoDeEspera;
         this.efecto = efecto;
+        this.probabilidadAparacición = probabilidadAparacición;
+        this.nivelAparicion = nivelMinDrop;
     }
 
     public void Usar(JugadorController jugador) => efecto?.Invoke(jugador);    

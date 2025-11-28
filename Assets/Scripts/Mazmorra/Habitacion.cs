@@ -34,7 +34,7 @@ public class HabitacionController : MonoBehaviour
         foreach (GameObject obj in posicionesOcupadas)
         {
             if (!obj.CompareTag("Cofre")) continue;
-            Instantiate(PM.prefabManager.ObtenerPrefab("Llave"), obj.transform.position, Quaternion.identity, transform);
+            obj.GetComponent<CofreController>().llave = true;
             return;
         }
     }

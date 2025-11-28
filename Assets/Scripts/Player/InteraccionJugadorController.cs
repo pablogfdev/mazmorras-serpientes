@@ -34,6 +34,7 @@ public class InteraccionJugadorController : MonoBehaviour
         if (objetoCercano.tag == "Entrada") AccionarEntradaMazmorra();
         if (objetoCercano.tag == "Salida") AccionarSalidaMazmorra();
         if ((objetoCercano.tag == "Cofre" || objetoCercano.tag == "Taquilla") && inventarioCerrado) AccionarInventarioAlmacen();
+        if (objetoCercano.tag == "Cofre") objetoCercano.GetComponent<CofreScriptController>().AbrirCofre();
         if (!inventarioCerrado) AccionarAccesoRapido();
     }
 
@@ -56,9 +57,10 @@ public class InteraccionJugadorController : MonoBehaviour
     }
 
     void AccionarSalidaMazmorra()
-    {
-        if (jugador.GetComponent<JugadorController>().LlaveObtenida)
+    { 
+        if (jugador.GetComponent<InventarioJugador>().inventario.ContieneLlave())
         {
+            jugador.GetComponent<InventarioJugador>().inventario.EliminarLlave();
             GestorPartidas.SubirNivel(GameObject.FindWithTag("Mazmorra").GetComponentInChildren<MazmorraController>().Nivel);
             EC.escenasController.CargarEscenaComerciante();
         }

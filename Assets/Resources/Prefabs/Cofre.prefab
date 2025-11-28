@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3180531410151299654}
   - component: {fileID: -3849958201532344733}
   - component: {fileID: 3163113459634306908}
+  - component: {fileID: -6908006738637456820}
   m_Layer: 0
   m_Name: Cofre
   m_TagString: Cofre
@@ -75,8 +76,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1403321441
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.9295865, b: 0, a: 1}
@@ -147,3 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95aca9dc89a54a40827dea40bd50cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6908006738637456820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665709177560562952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce4122c028e7fb4ba39e0ed03485494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tieneContenido: 1

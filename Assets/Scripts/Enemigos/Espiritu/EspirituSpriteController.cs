@@ -61,6 +61,6 @@ public class EspirituSpriteController : MonoBehaviour
     private void CambiarSprite(string direccion)
     {
         ultimaDireccion = direccion;
-        spriteRenderer.sprite = SpriteManager.Instancia.ObtenerSprite($"Espiritu_{direccion}");
+        spriteRenderer.sprite = SpriteManager.spriteManager.ObtenerSprite($"Espiritu_{direccion}");
     }
 }

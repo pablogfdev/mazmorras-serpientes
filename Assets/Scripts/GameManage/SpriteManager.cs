@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class SpriteManager : MonoBehaviour
 {
-    public static SpriteManager Instancia { get; private set; }
+    public static SpriteManager spriteManager { get; private set; }
     private Dictionary<string, Sprite> sprites = new();
 
     void Awake()
     {
-        if (Instancia == null) Instancia = this;
+        if (spriteManager == null) spriteManager = this;
         CargarSprites();
     }
 
@@ -26,6 +26,10 @@ public class SpriteManager : MonoBehaviour
         CargarSprite("Espiritu_Sur", "Sprites/Espiritu/Espiritu_Sur");
         CargarSprite("Espiritu_Este", "Sprites/Espiritu/Espiritu_Este");
         CargarSprite("Espiritu_Oeste", "Sprites/Espiritu/Espiritu_Oeste");
+
+        //COFRE
+        CargarSprite("Cofre_Abierto", "Sprites/Cofre/Cofre_Abierto");
+        CargarSprite("Cofre_Cerrado", "Sprites/Cofre/Cofre_Cerrado");
     }
 
     private void CargarSprite(string clave, string ruta) => sprites[clave] = Resources.Load<Sprite>(ruta);
