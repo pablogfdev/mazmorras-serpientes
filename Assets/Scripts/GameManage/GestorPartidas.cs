@@ -10,10 +10,11 @@ public static class GestorPartidas
     public static InventarioController inventarioJugador;
     public static InventarioController inventarioTaquilla;
 
-    public static void CrearNuevaPartida()
+    public static void CrearNuevaPartida(DatosNuevaPartida datos)
     {
         ObtenerPartidas();
-        partidaActiva = new Partida{ nombre = $"Partida {listaPartidas.partidas.Count + 1}" };
+        string nombreFiltrado = datos.nombre.Trim();
+        partidaActiva = new Partida{ nombre = nombreFiltrado, dificultad = datos != null ? datos.dificultad : Dificultad.Normal };
         listaPartidas.partidas.Add(partidaActiva);
         GuardarPartidasEnArchivo();
         InstanciarInventarios();

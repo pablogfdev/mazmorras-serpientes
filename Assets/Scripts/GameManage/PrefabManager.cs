@@ -38,6 +38,9 @@ public class PrefabManager : MonoBehaviour
         CargarPrefab("VentanaAjustes", "Prefabs/Menus/VentanaAjustes");
         CargarPrefab("VentanaControles", "Prefabs/Menus/VentanaControles");
         CargarPrefab("VentanaPrincipal", "Prefabs/Menus/VentanaPrincipal");
+        CargarPrefab("VentanaEditarPartida", "Prefabs/Menus/VentanaEditarPartida");
+        CargarPrefab("VentanaEliminarPartida", "Prefabs/Menus/VentanaEliminarPartida");
+        CargarPrefab("VentanaMensaje", "Prefabs/Menus/VentanaMensaje");
 
         CargarPrefab("MenuPausa", "Prefabs/Menus/MenuPausa");
         CargarPrefab("SlotInventario", "Prefabs/SlotInventario");
