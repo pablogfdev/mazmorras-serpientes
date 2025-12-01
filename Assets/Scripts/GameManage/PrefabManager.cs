@@ -42,6 +42,7 @@ public class PrefabManager : MonoBehaviour
         CargarPrefab("VentanaEliminarPartida", "Prefabs/Menus/VentanaEliminarPartida");
         CargarPrefab("VentanaMensaje", "Prefabs/Menus/VentanaMensaje");
 
+        CargarPrefab("MenuGameOver", "Prefabs/Menus/MenuGameOver");
         CargarPrefab("MenuPausa", "Prefabs/Menus/MenuPausa");
         CargarPrefab("SlotInventario", "Prefabs/SlotInventario");
 

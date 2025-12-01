@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class JugadorController : MonoBehaviour
 {
@@ -55,6 +57,8 @@ public class JugadorController : MonoBehaviour
     private Coroutine corrutinaInmunidad;
     private Coroutine corrutinaDefensa;
     private Coroutine corrutinaCuracion;
+    
+    private JugadorMuerteController muerteController;
 
     void Awake()
     {
@@ -66,13 +70,8 @@ public class JugadorController : MonoBehaviour
         espadaSecundaria = gameObject.transform.Find("EspadaSecundaria").gameObject;
         espadaPrimaria.SetActive(false);
         espadaSecundaria.SetActive(false);
-
-        EventoMuerte += () =>
-        {
-            Transform camara = transform.Find("CamaraJugador");
-            camara.parent = null;       // Codigo temporal: Desacoplar la camara del jugador para que siga funcionando tras su muerte
-            Destroy(gameObject);
-        };
+        muerteController = GetComponent<JugadorMuerteController>();
+        EventoMuerte += () => muerteController?.IniciarMuerte();
     }
 
     void Update() => ActualizarVelocidad();

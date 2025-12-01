@@ -9,4 +9,10 @@ public class ItemStack
         this.item = item;
         this.cantidad = cantidad;
     }
+
+    public void Limpiar()
+    {
+        item = null;
+        cantidad = 0;
+    }
 }
