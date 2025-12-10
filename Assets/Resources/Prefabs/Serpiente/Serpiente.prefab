@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8857379072822331537}
   - component: {fileID: 985786335128615678}
   - component: {fileID: 1026188500052774942}
+  - component: {fileID: 4809712663177697540}
   m_Layer: 0
   m_Name: Serpiente
   m_TagString: Enemigo
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -158,5 +159,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e883f0252ba5c914d9eec8adb4e94284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4809712663177697540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205693659002612678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3fc206ac9690a459d73e61b028c910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

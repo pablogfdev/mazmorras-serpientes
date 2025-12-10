@@ -59,12 +59,18 @@ public class JugadorController : MonoBehaviour
     private Coroutine corrutinaCuracion;
     
     private JugadorMuerteController muerteController;
+    [SerializeField] private Animator animCuerpo; 
+    [SerializeField] private JugadorSpriteController spriteController;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         vidaMaxima = vidaBase;
         vida = vidaBase;
+
+        animCuerpo = transform.Find("Cuerpo")?.GetComponent<Animator>();
+        spriteController = GetComponent<JugadorSpriteController>();
 
         espadaPrimaria = gameObject.transform.Find("EspadaPrimaria").gameObject;
         espadaSecundaria = gameObject.transform.Find("EspadaSecundaria").gameObject;
@@ -99,16 +105,18 @@ public class JugadorController : MonoBehaviour
     private IEnumerator DarEstocada()
     {
         if (espadaPrimaria.activeSelf || espadaSecundaria.activeSelf) yield break;
+        spriteController.IniciarAtaque(2); 
         espadaPrimaria.SetActive(true);
-        yield return new WaitForSeconds(0.33f);
+        while (spriteController.EstaAtacando) yield return null;
         espadaPrimaria.SetActive(false);
     }
 
     private IEnumerator DarBarrido()
     {
         if (espadaPrimaria.activeSelf || espadaSecundaria.activeSelf) yield break;
+        spriteController.IniciarAtaque(3);
         espadaSecundaria.SetActive(true);
-        yield return new WaitForSeconds(0.33f);
+        while (spriteController.EstaAtacando) yield return null;
         espadaSecundaria.SetActive(false);
     }
 
@@ -120,6 +128,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator IniciarCorrutinaVelocidad(float velocidadExtra, float duracion)
     {
+        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
         this.velocidadExtra = velocidadExtra;
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Velocidad"), duracion);
         yield return new WaitForSeconds(duracion);
@@ -134,6 +143,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator PotenciarDanio(float danioExtra, float duracion)
     {
+        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
         this.danioExtra = Mathf.RoundToInt(danioExtra);
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Fuerza"), duracion);
         yield return new WaitForSeconds(duracion);
@@ -148,6 +158,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator CurarVida(int vidaExtraPorIntervalo, float duracion)
     {
+        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
         float tiempoPasado = 0f;
         while (tiempoPasado < duracion)
         {
@@ -165,6 +176,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator DarInmunidad(float duracion)
     {
+        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
         inmune = true;
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Antidoto"), duracion);
         yield return new WaitForSeconds(duracion);
@@ -179,6 +191,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator AplicarDefensa(float defensaExtra, float duracion)
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
         defensa = defensaExtra;
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Defensa"), duracion);
         yield return new WaitForSeconds(duracion);

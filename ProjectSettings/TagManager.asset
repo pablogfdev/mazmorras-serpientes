@@ -50,14 +50,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Personaje
-    uniqueID: 1766630469
-    locked: 0
   - name: Enemigos
     uniqueID: 1490051207
     locked: 0
   - name: Objeto
     uniqueID: 1403321441
+    locked: 0
+  - name: Personaje
+    uniqueID: 1766630469
     locked: 0
   - name: ElementoVisualFondo
     uniqueID: 1882853479

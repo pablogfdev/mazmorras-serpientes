@@ -17,9 +17,9 @@ public class BarraVidaObjetivoController : MonoBehaviour
         }
     }
 
-    Vector3 escalaInicial = new Vector3(6f, 0.25f, 1f);
-    private float intervaloInicialX = 2.5f;
-    private float intervaloInicialY = 4f;
+    Vector3 escalaInicial = new Vector3(3f, 0.125f, 0.5f);
+    private float intervaloInicialX = 1.25f;
+    private float intervaloInicialY = 2f;
 
     private TextMeshProUGUI textoInformacionVida;
     private TextMeshProUGUI textoInformacionNombre;
@@ -91,8 +91,8 @@ public class BarraVidaObjetivoController : MonoBehaviour
         canvasVida.SetParent(transform.parent, false);
         canvasNombre.SetParent(transform.parent, false);
 
-        canvasVida.localPosition = new Vector3(8f, 4.5f, 0f);
-        canvasNombre.localPosition = new Vector3(4.75f, 4.5f, 0f);
+        canvasVida.localPosition = new Vector3(4f, 2.25f, 0f);
+        canvasNombre.localPosition = new Vector3(2.375f, 2.25f, 0f);
     }
 
     void InstanciarBarraVida()

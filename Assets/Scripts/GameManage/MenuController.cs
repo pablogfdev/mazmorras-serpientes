@@ -120,6 +120,8 @@ public class MenuController : MonoBehaviour
 
     private void ActivarVentana(GameObject ventana)
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), Camera.main.transform.position);
+        Debug.Log("Activando ventana: " + ventana.name);
         ventanaPartidasGuardadas.SetActive(false);
         ventanaEliminarPartida.SetActive(false);
         ventanaEditarPartida.SetActive(false);
@@ -133,6 +135,7 @@ public class MenuController : MonoBehaviour
 
     public void MostrarPartidasGuardadas()
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), Camera.main.transform.position);
         ActivarVentana(ventanaPartidasGuardadas);
         LimpiarBotonesAnteriores();
         GenerarBotonesPartidasGuardadas();
@@ -150,11 +153,8 @@ public class MenuController : MonoBehaviour
             GameObject objetoBotonPartida = Instantiate(botonPlantillaPartida, contentScrollPartidas);
             objetoBotonPartida.SetActive(true);
 
-            objetoBotonPartida.transform.Find("TextoNombre")
-                .GetComponent<TMP_Text>().text = partida.nombre;
-
-            objetoBotonPartida.transform.Find("TextoInfo")
-                .GetComponent<TMP_Text>().text = $"Nivel {partida.nivel}\n{partida.dificultad}";
+            objetoBotonPartida.transform.Find("TextoNombre").GetComponent<TMP_Text>().text = partida.nombre;
+            objetoBotonPartida.transform.Find("TextoInfo").GetComponent<TMP_Text>().text = $"Nivel {partida.nivel}\n{partida.dificultad}";
 
             Button botonPartida = objetoBotonPartida.GetComponent<Button>();
             botonPartida.onClick.RemoveAllListeners();
@@ -172,6 +172,7 @@ public class MenuController : MonoBehaviour
 
     void AbrirVentanaEditarPartida(string id)
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), transform.position);
         Partida partida = GestorPartidas.ListasPartidas().Find(p => p.id == id);
         if (partida == null) return;
         campoNombreEditarPartida.text = partida.nombre;
@@ -191,13 +192,15 @@ public class MenuController : MonoBehaviour
 
     void AbrirVentanaEliminarPartida(string id)
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), transform.position);
         Partida partida = GestorPartidas.ListasPartidas().Find(p => p.id == id);
         if (partida == null) return;
         ActivarVentana(ventanaEliminarPartida);
 
         botonConfirmarBorrado.onClick.RemoveAllListeners();
         botonConfirmarBorrado.onClick.AddListener(() =>
-        {
+        {   
+            AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), transform.position);
             GestorPartidas.EliminarPartida(id);
             MostrarPartidasGuardadas();
         });
@@ -232,13 +235,15 @@ public class MenuController : MonoBehaviour
     }
 
     private void CargarPartida(string id)
-    {
+    {   
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), transform.position);
         GestorPartidas.CargarPartida(id);
         EC.escenasController.CargarEscenaComerciante();
     }
 
     void CrearPartida()
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), transform.position);
         if (!ValidarNombre(campoNombreNuevaPartida.text)) return;
 
         DatosNuevaPartida datos = new DatosNuevaPartida

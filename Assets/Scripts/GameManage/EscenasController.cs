@@ -21,31 +21,35 @@ public class EscenasController : MonoBehaviour
     }
 
     public void CargarEscenaMazmorras(int nivel)
-    {
+    {   
+        SonidoManager.sonidoManager.PararMusica();
         alFinalizar = () =>
         {
             InstanciarElementosEscenaMazmorras(nivel);
+            SonidoManager.sonidoManager.ReproducirMusica("Musica_Mazmorra", 0.1f);
         };
         escenaDestino = "Mazmorras";
         StartCoroutine(CargarEscenaConProgreso());
     }
 
-
-
     public void CargarEscenaComerciante()
-    {
+    {   
+        SonidoManager.sonidoManager.PararMusica();
         alFinalizar = () => { InstanciarElementosEscenaComerciante(); };
+        SonidoManager.sonidoManager.ReproducirMusica("Musica_Comerciante", 0.1f);
         escenaDestino = "Comerciante";
         StartCoroutine(CargarEscenaConProgreso());
     }
     
-    
 
     public void CargarEscenaMenuPrincipal()
     {
+        SonidoManager.sonidoManager.PararMusica();
         alFinalizar = null;
         escenaDestino = "MenuPrincipal";
         SceneManager.LoadScene(escenaDestino);
+        SonidoManager.sonidoManager.ReproducirMusica("Musica_Menu", 0.15f);
+
     }
 
     private IEnumerator CargarEscenaConProgreso()

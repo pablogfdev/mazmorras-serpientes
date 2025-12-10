@@ -13,9 +13,7 @@ public class AtaquePrimario : MonoBehaviour
     void Awake()
     {
         jugador = gameObject.GetComponentInParent<JugadorController>();
-        barraVida = GameObject.FindWithTag("Player")
-            .transform.Find("BarraVidaObjetivo")
-            .GetComponent<BarraVidaObjetivoController>();
+        barraVida = GameObject.FindWithTag("Player").transform.Find("BarraVidaObjetivo").GetComponent<BarraVidaObjetivoController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,6 +22,7 @@ public class AtaquePrimario : MonoBehaviour
         if (!other.CompareTag("Enemigo")) return;
         enemigo = barraVida.Enemigo;
         if (enemigo != null) enemigo.Vida -= jugador.danioEstocada * jugador.danioExtra;
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Lanza_Clavada"), transform.position);
         ataqueEjecutado = true;
     }
 }

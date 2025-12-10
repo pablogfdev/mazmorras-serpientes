@@ -7,9 +7,9 @@ public class BarraVidaJugadorController : MonoBehaviour
     private Transform barraVida;
     private TextMeshProUGUI textoInformacionVida;
     private TextMeshProUGUI textoInformacionNombre;
-    private Vector3 escalaInicial = new Vector3(6f, 0.25f, 1f);
-    private float intervaloInicialX = -8.5f;
-    private float intervaloInicialY = 4f;
+    private Vector3 escalaInicial = new Vector3(3f, 0.125f, 0.5f);
+    private float intervaloInicialX = -4.25f;
+    private float intervaloInicialY = 2f;
 
 
     void Awake()
@@ -65,8 +65,8 @@ public class BarraVidaJugadorController : MonoBehaviour
         canvasVida.SetParent(transform.parent, false);
         canvasNombre.SetParent(transform.parent, false);
 
-        canvasVida.localPosition = new Vector3(-3f, 4.5f, 0f);
-        canvasNombre.localPosition = new Vector3(-6.25f, 4.5f, 0f);
+        canvasVida.localPosition = new Vector3(-1.5f, 2.25f, 0f);
+        canvasNombre.localPosition = new Vector3(-3.125f, 2.25f, 0f);
 
         textoInformacionVida.text = jugador.Vida.ToString();
         textoInformacionNombre.text = "NombreJugador";

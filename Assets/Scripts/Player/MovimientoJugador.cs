@@ -5,6 +5,7 @@ public class MovimientoJugador : MonoBehaviour
 {
     private JugadorController jugador;
     private Vector2 movimiento;
+    public Vector2 Movimiento => movimiento;
     private float velocidadActual;
 
     void Awake()

@@ -30,6 +30,19 @@ public class SpriteManager : MonoBehaviour
         //COFRE
         CargarSprite("Cofre_Abierto", "Sprites/Cofre/Cofre_Abierto");
         CargarSprite("Cofre_Cerrado", "Sprites/Cofre/Cofre_Cerrado");
+
+        //Serpiente
+        CargarSprite("Serpiente_Norte_1", "Sprites/Serpiente/Norte/Serpiente_Norte_1");
+        CargarSprite("Serpiente_Norte_2", "Sprites/Serpiente/Norte/Serpiente_Norte_2");
+        CargarSprite("Serpiente_Sur_1", "Sprites/Serpiente/Sur/Serpiente_Sur_1");
+        CargarSprite("Serpiente_Sur_2", "Sprites/Serpiente/Sur/Serpiente_Sur_2");
+        CargarSprite("Serpiente_Este_1", "Sprites/Serpiente/Este/Serpiente_Este_1");
+        CargarSprite("Serpiente_Este_2", "Sprites/Serpiente/Este/Serpiente_Este_2");
+        CargarSprite("Serpiente_Oeste_1", "Sprites/Serpiente/Oeste/Serpiente_Oeste_1");
+        CargarSprite("Serpiente_Oeste_2", "Sprites/Serpiente/Oeste/Serpiente_Oeste_2");
+
+        //JUGADOR
+        CargarSprite("Jugador_Muerto", "Sprites/Jugador/Jugador_Muerto");
     }
 
     private void CargarSprite(string clave, string ruta) => sprites[clave] = Resources.Load<Sprite>(ruta);

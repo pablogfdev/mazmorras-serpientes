@@ -48,9 +48,9 @@ public class InteraccionJugadorController : MonoBehaviour
     {
         if (!PJC.pausaJuegoController.MenuNivelAbierto && Time.timeScale != 0f)
         {
+            AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Abrir_Puerta"), transform.position);
             Instantiate(PM.prefabManager.ObtenerPrefab("MenuNivel"), transform.position, Quaternion.identity);
             PJC.pausaJuegoController.ToggleMenuNiveles();
-            return;
         }
         //HUD.inventarioHUDManager.CerrarInventarios();
         return;

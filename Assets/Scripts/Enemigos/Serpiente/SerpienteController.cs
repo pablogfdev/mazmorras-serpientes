@@ -13,12 +13,15 @@ public class SerpienteController : EnemigoController
 {
     private int nivel;
 
-    float velocidadMovimientoBase;
+    private float velocidadMovimientoBase;
+    public float VelocidadMovimientoBase { get => velocidadMovimientoBase; }
     private float velocidadMovimiento;
+    public float VelocidadMovimiento { get => velocidadMovimiento; set => velocidadMovimiento = value; }
     private float velocidadAtaque;
     private float distanciaDeteccionPared = 5f;
 
     private Vector3 direccionAleatoria;
+    public Vector3 DireccionAleatoria { get => direccionAleatoria; }
     private float tiempoEnMovimiento;
     private float tiempoDespierto;
 

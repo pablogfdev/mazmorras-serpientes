@@ -4,24 +4,35 @@ using UnityEngine.UI;
 
 public class JugadorMuerteController : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private bool yaMuerto = false;
+    private GameObject cuerpo;
 
-    void Awake() => rb = GetComponent<Rigidbody2D>();
+    void Awake() => cuerpo = transform.Find("Cuerpo").gameObject;
     
     public void IniciarMuerte()
     {
+        if (yaMuerto) return; 
+        yaMuerto = true;
         StartCoroutine(SecuenciaMuerte());
         ProcesarMuerteSegunDificultad();
     }
    
     private IEnumerator SecuenciaMuerte()
-    {
+    {   
+        SonidoManager.sonidoManager.PararMusica();
+        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Sonido_Muerte"), Camera.main.transform.position);
+        cuerpo.GetComponent<Animator>().enabled = false;
+        cuerpo.GetComponent<SpriteRenderer>().sprite = SpriteManager.spriteManager.ObtenerSprite("Jugador_Muerto");
         MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
-        foreach (var s in scripts) if (s != this) s.enabled = false;;
+        foreach (var s in scripts) if (s != this) s.enabled = false;
         foreach (var col in GetComponentsInChildren<Collider2D>()) col.enabled = false;
-        transform.Find("Cuerpo").rotation = Quaternion.Euler(0f, 0f, 90f);
         yield return new WaitForSeconds(3f);
         MostrarGameOverUI();
+
+        var jugador = GameObject.FindGameObjectWithTag("Player");
+        var cam = jugador.GetComponentInChildren<Camera>()?.transform;
+        cam.SetParent(null);
+        Destroy(GameObject.FindGameObjectWithTag("Mazmorra"));
     }
 
     private void MostrarGameOverUI()
