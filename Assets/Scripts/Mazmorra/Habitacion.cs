@@ -4,9 +4,11 @@ using PM = PrefabManager;
 
 public class HabitacionController : MonoBehaviour
 {
+    private int semilla;
+    private System.Random generador;
     private int nivel;
-    private float ancho;
-    private float altura;
+    private float ancho = 30;
+    private float altura = 20;
     private float grosorPared = 1f;
 
     private int numCofres;
@@ -15,15 +17,21 @@ public class HabitacionController : MonoBehaviour
     private int numEspiritus;
     private MazmorraController mazmorra;
 
+    private int numEntidadesCreadas = 0;
+
+    public int X { get; private set; }
+    public int Y { get; private set; }
+
     float distancia = 2f;
 
     public bool LlaveGenerada { get; set; } = false;
 
     List<GameObject> posicionesOcupadas = new List<GameObject>();
 
-    void Awake()
+    public void Inicializar()
     {
-        CalcularTamañoYContenido();
+        InicializarGenerador();
+        CalcularNumeroEntidades();
         crearParedes();
         crearSuelo();
         generarEntidades();
@@ -39,20 +47,13 @@ public class HabitacionController : MonoBehaviour
         }
     }
 
-    void CalcularTamañoYContenido()
+    void CalcularNumeroEntidades()
     {
-        mazmorra = GetComponentInParent<MazmorraController>();
-        nivel = mazmorra.Nivel;
-
-        ancho = 15 + nivel * 2;
-        altura = 12 + nivel;
-
-        numCofres = Random.Range(1, 1 + (nivel / 3) + 1);
-        numSerpientes = Random.Range(nivel / 2, nivel / 2 + 2);
-        numGolems = Random.Range(nivel / 2, nivel / 2 + 2);
-        numEspiritus = Random.Range(nivel / 2, nivel / 2 + 2);
+        numCofres = generador.Next(1, 4);
+        numSerpientes = generador.Next(1, 5);
+        numGolems = generador.Next(1, 5);
+        numEspiritus = generador.Next(1, 5);
     }
-
 
     void crearSuelo()
     {
@@ -84,19 +85,31 @@ public class HabitacionController : MonoBehaviour
         paredDerecha.transform.localScale = escalaVertical;
     }
 
+    private void InicializarGenerador()
+    {
+        semilla = GestorPartidas.partidaActiva.semilla;
+        string[] partes = name.Split('_');
+        int.TryParse(partes[1], out int x);
+        int.TryParse(partes[2], out int y);
+
+        X = x;
+        Y = y;
+
+        mazmorra = GetComponentInParent<MazmorraController>();
+        generador = new System.Random(semilla * 1000 + X * 100 + Y + mazmorra.Nivel * 91);
+    }
+
     void generarEntidades()
     {
-        for (int i = 0; i < numCofres; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Cofre")); }
-        for (int i = 0; i < numSerpientes; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Serpiente")); }
-        for (int i = 0; i < numGolems; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("GolemPiedra")); }
-        for (int i = 0; i < numEspiritus; i++) { colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Espiritu")); }
+        for (int i = 0; i < numCofres; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Cofre"));
+        for (int i = 0; i < numSerpientes; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Serpiente"));
+        for (int i = 0; i < numGolems; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("GolemPiedra"));
+        for (int i = 0; i < numEspiritus; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Espiritu"));
     }
 
     void colocarEntidadEnPosicioValida(GameObject prefab)
     {
         Vector3 centro = transform.position;
-
-        //Reducimos 4f para evitar que la entidad aparezca pegado a las paredes
         float rangoX = (ancho / 2) - grosorPared - 4f;
         float rangoY = (altura / 2) - grosorPared - 4f;
 
@@ -106,12 +119,11 @@ public class HabitacionController : MonoBehaviour
 
         do
         {
-            float posX = Random.Range(centro.x - rangoX, centro.x + rangoX);
-            float posY = Random.Range(centro.y - rangoY, centro.y + rangoY);
+            float posX = (float)(generador.NextDouble() * 2 * rangoX - rangoX + centro.x);
+            float posY = (float)(generador.NextDouble() * 2 * rangoY - rangoY + centro.y);
             posicionEntidad = new Vector3(posX, posY, 0);
 
             posicionValida = true;
-
             foreach (GameObject posExistente in posicionesOcupadas)
             {
                 if (Vector3.Distance(posicionEntidad, posExistente.transform.position) < distancia)
@@ -124,6 +136,9 @@ public class HabitacionController : MonoBehaviour
             intentos++;
         } while (!posicionValida && intentos < 1000);
 
-        posicionesOcupadas.Add(Instantiate(prefab, posicionEntidad, Quaternion.identity, transform));
+        GameObject nuevo = Instantiate(prefab, posicionEntidad, Quaternion.identity, transform);
+        int numero = numEntidadesCreadas++;
+        nuevo.name = $"{prefab.tag}_{X}_{Y}_{numero}";
+        posicionesOcupadas.Add(nuevo);
     }
 }

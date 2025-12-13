@@ -14,7 +14,9 @@ public static class GestorPartidas
     {
         ObtenerPartidas();
         string nombreFiltrado = datos.nombre.Trim();
-        partidaActiva = new Partida{ nombre = nombreFiltrado, dificultad = datos != null ? datos.dificultad : Dificultad.Normal };
+        int semillaGenerada = System.BitConverter.ToInt32(System.Guid.NewGuid().ToByteArray(), 0);
+        int semillaFinal = datos.semilla.HasValue ? datos.semilla.Value : semillaGenerada;
+        partidaActiva = new Partida{ nombre = nombreFiltrado, dificultad = datos != null ? datos.dificultad : Dificultad.Normal, semilla = semillaFinal};
         listaPartidas.partidas.Add(partidaActiva);
         GuardarPartidasEnArchivo();
         InstanciarInventarios();

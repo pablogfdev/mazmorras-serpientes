@@ -5,16 +5,26 @@ using Random = UnityEngine.Random;
 public class CofreController : MonoBehaviour, InterfazAlmacen
 {
     public InventarioController inventario { get; private set; } = new InventarioController();
+    private System.Random generador;
     private int nivel = 1;
     private bool generado = false;
     public bool llave = false;
 
     List<Item> itemsFiltrados;
 
-    private void Awake()
+    private void Start()
     {
         MazmorraController mazmorra = GetComponentInParent<MazmorraController>();
-        if (mazmorra != null) nivel = mazmorra.Nivel;
+        nivel = mazmorra.Nivel;
+
+        string[] partes = name.Split('_');
+        int x = 0, y = 0, numero = 0;
+
+        int.TryParse(partes[1], out x);
+        int.TryParse(partes[2], out y);
+        int.TryParse(partes[3], out numero);
+        
+        generador = new System.Random(GestorPartidas.partidaActiva.semilla + x * 91 + y * 93 + numero * 97 + nivel * 101);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -34,7 +44,7 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
 
         foreach (var item in itemsFiltrados)
         {
-            float probabilidad = Random.Range(0f, 100f);
+            float probabilidad = (float)(generador.NextDouble() * 100.0);
             if (probabilidad <= item.probabilidadAparacición)
             {
                 int cantidad = CalcularCantidad(item);
@@ -65,7 +75,7 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
         int valorMax = Mathf.CeilToInt(item.probabilidadAparacición) / 10;
         valorMax = Mathf.Max(1, valorMax);
         valorMax = (item.nombre == "Oro") ? valorMax * 10 : (item.nombre == "Gema") ? valorMax * 5 : valorMax;
-        return Random.Range(2, valorMax + 1);
+        return generador.Next(2, valorMax + 1);
     }
 
     private void DividirMontones()
@@ -84,8 +94,8 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
 
             if (cantidad > 15)
             {
-                int a = Random.Range(1, cantidad - 1);
-                int b = Random.Range(1, cantidad - a);
+                int a = generador.Next(1, cantidad - 1);
+                int b = generador.Next(1, cantidad - a);
                 int c = cantidad - a - b;
 
                 nuevosStacks.Add(new ItemStack(stack.item, a));
@@ -94,7 +104,7 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
             }
             else if (cantidad > 5)
             {
-                int a = Random.Range(1, cantidad);
+                int a = generador.Next(1, cantidad);
                 int b = cantidad - a;
 
                 nuevosStacks.Add(new ItemStack(stack.item, a));
@@ -117,8 +127,7 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
     private void DispersarItems()
     {
         List<ItemStack> items = new List<ItemStack>();
-        foreach (var stack in inventario.slots) if (stack != null && stack.item != null && stack.cantidad > 0) items.Add(stack);
-        
+        foreach (var stack in inventario.slots) if (stack != null && stack.item != null && stack.cantidad > 0) items.Add(stack);        
 
         inventario.slots.Clear();
         for (int i = 0; i < inventario.tamano; i++) inventario.slots.Add(new ItemStack(null, 0));
@@ -126,7 +135,7 @@ public class CofreController : MonoBehaviour, InterfazAlmacen
         foreach (var stack in items)
         {
             int intentos = 0;
-            int index = Random.Range(0, inventario.tamano);
+            int index = generador.Next(0, inventario.tamano);
 
             while (inventario.slots[index].item != null && intentos < inventario.tamano)
             {

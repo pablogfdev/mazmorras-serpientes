@@ -15,7 +15,7 @@ public class AtaqueSecundario : MonoBehaviour
         if (!other.CompareTag("Enemigo")) return;
         ReproducirLanzaClavada();
         enemigo = other.GetComponent<EnemigoController>();
-        enemigo.Vida -= jugador.danioBarrido * jugador.danioExtra;
+        enemigo.RecibirDanio(jugador.danioBarrido * jugador.danioExtra);
     }
 
     public void ReproducirLanzaClavada()

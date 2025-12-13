@@ -20,6 +20,8 @@ public class EscenasController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start() => SonidoManager.sonidoManager.ReproducirMusica("Musica_Menu", 0.15f);
+
     public void CargarEscenaMazmorras(int nivel)
     {   
         SonidoManager.sonidoManager.PararMusica();
@@ -35,8 +37,10 @@ public class EscenasController : MonoBehaviour
     public void CargarEscenaComerciante()
     {   
         SonidoManager.sonidoManager.PararMusica();
-        alFinalizar = () => { InstanciarElementosEscenaComerciante(); };
-        SonidoManager.sonidoManager.ReproducirMusica("Musica_Comerciante", 0.1f);
+        alFinalizar = () => { 
+            InstanciarElementosEscenaComerciante();
+            SonidoManager.sonidoManager.ReproducirMusica("Musica_Comerciante", 0.1f);
+        };
         escenaDestino = "Comerciante";
         StartCoroutine(CargarEscenaConProgreso());
     }
@@ -93,6 +97,7 @@ public class EscenasController : MonoBehaviour
         MazmorraController mazmorraController = mazmorra.GetComponent<MazmorraController>();
         mazmorraController.Nivel = nivel;
         mazmorraController.CrearMazmorra();
+        //mazmorraController.DibujarConexionesDebug(Color.black, 2f);
     }
 
     void InstanciarElementosEscenaComerciante()

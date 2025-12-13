@@ -11,13 +11,11 @@ public enum EstadoSerpiente
 
 public class SerpienteController : EnemigoController
 {
-    private int nivel;
-
-    private float velocidadMovimientoBase;
+    private float velocidadMovimientoBase = 2.5f;
     public float VelocidadMovimientoBase { get => velocidadMovimientoBase; }
     private float velocidadMovimiento;
     public float VelocidadMovimiento { get => velocidadMovimiento; set => velocidadMovimiento = value; }
-    private float velocidadAtaque;
+    private float velocidadAtaque = 1f;
     private float distanciaDeteccionPared = 5f;
 
     private Vector3 direccionAleatoria;
@@ -28,6 +26,7 @@ public class SerpienteController : EnemigoController
     private GameObject zInstanciada;    // Codigo temporal: representa la serpiente dormida
 
     private bool venenoso;
+    public bool Venenoso { get => venenoso; }
 
     private Coroutine corrutinaDescanso;
     private Coroutine corrutinaMovimiento;
@@ -58,18 +57,26 @@ public class SerpienteController : EnemigoController
         }
     }
 
+    public override void RecibirDanio(float danio) => base.RecibirDanio(danio);
+
     protected override void Awake()
     {
         base.Awake();
         AsignarJugadorController();
-        AjustarEstadisticasPorNivel();
         InstanciarHijosSerpiente();
         AsignarTiempoEnMovimiento();
         AsignarTiempoDespierto();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        IniciarEventos();
+        AjustarEstadisticas();
         AplicarColorVenenoso();
     }
 
-    void Start()
+    private void IniciarEventos()
     {
         StartCoroutine(Mover());
 
@@ -90,7 +97,7 @@ public class SerpienteController : EnemigoController
             corrutinaMovimiento = StartCoroutine(Mover());
         };
     }
-
+    
     IEnumerator Mover()
     {
         while (estadoActual == EstadoSerpiente.Pasivo)
@@ -173,9 +180,9 @@ public class SerpienteController : EnemigoController
         if(venenoso && !jugadorController.inmune) IniciarCorrutinaVeneno(10, 3);
         while (true)
         {
-            yield return new WaitForSeconds(velocidadAtaque * 0.25f);
+            yield return new WaitForSeconds(velocidadAtaque * 0.50f);
             jugadorController.RecibirDanio(10);
-            yield return new WaitForSeconds(velocidadAtaque * 0.75f);
+            yield return new WaitForSeconds(velocidadAtaque * 0.50f);
         }
     }
 
@@ -246,13 +253,14 @@ public class SerpienteController : EnemigoController
         jugadorController = GameObject.FindGameObjectWithTag("Player").GetComponent<JugadorController>();
     }
 
-    void AjustarEstadisticasPorNivel()
+    void AjustarEstadisticas()
     {
-        MazmorraController mazmorra = GetComponentInParent<MazmorraController>();
-        nivel = mazmorra.Nivel;
-        velocidadMovimientoBase = 2f + nivel * 0.1f;
-        velocidadAtaque = 2f - nivel * 0.1f;
-        venenoso = nivel >= 5 && Random.value < (nivel - 4) * 0.05f;
+        int vidaMin = 35;
+        int vidaMax = 55;
+        int vidaGenerada = generador.Next(vidaMin, vidaMax + 1);
+
+        InicializarVida(vidaGenerada);
+        venenoso = generador.NextDouble() < 0.10;
         velocidadMovimiento = velocidadMovimientoBase;
     }
 

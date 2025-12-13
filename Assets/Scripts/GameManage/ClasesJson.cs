@@ -20,7 +20,8 @@ using System.Collections.Generic;
     public string id = Guid.NewGuid().ToString();
     public string nombre;
     public int nivel = 1;
-    public Dificultad dificultad = Dificultad.Normal; // valor por defecto
+    public int semilla;
+    public Dificultad dificultad = Dificultad.Normal;
 
     public List<ItemGuardado> inventarioJugador = new List<ItemGuardado>();
     public List<ItemGuardado> inventarioTaquilla = new List<ItemGuardado>();

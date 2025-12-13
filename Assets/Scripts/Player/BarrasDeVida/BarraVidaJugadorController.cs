@@ -69,6 +69,6 @@ public class BarraVidaJugadorController : MonoBehaviour
         canvasNombre.localPosition = new Vector3(-3.125f, 2.25f, 0f);
 
         textoInformacionVida.text = jugador.Vida.ToString();
-        textoInformacionNombre.text = "NombreJugador";
+        textoInformacionNombre.text = "Jugador";
     }
 }

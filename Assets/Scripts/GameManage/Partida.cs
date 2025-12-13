@@ -2,6 +2,7 @@ public class DatosNuevaPartida
 {
     public string nombre;
     public Dificultad dificultad;
+    public int? semilla;
 }
 
 public enum Dificultad

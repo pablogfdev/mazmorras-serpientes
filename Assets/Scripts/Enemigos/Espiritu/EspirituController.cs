@@ -36,11 +36,29 @@ public class EspirituController : EnemigoController
         suelo = transform.parent.Find("Suelo(Clone)");
         detectorJugador = Instantiate(PrefabManager.prefabManager.ObtenerPrefab("DetectorEspiritu"), transform).GetComponent<DetectorEspiritu>();
         EstadoActual = EstadoEspiritu.Ambulante;
-        eventoCambioBarraVida += RecibirDanio;
     }
 
-    private void RecibirDanio(float nuevaVida) => Teletransportarse();
+    public override void RecibirDanio(float danio) 
+    {
+        base.RecibirDanio(danio);
+        Teletransportarse();
+    } 
 
+    protected override void Start()
+    {
+        base.Start();
+        AjustarEstadisticas();
+    }
+
+    void AjustarEstadisticas()
+    {
+        int vidaMin = 35;
+        int vidaMax = 55;
+        int vidaGenerada = generador.Next(vidaMin, vidaMax + 1);
+
+        InicializarVida(vidaGenerada);
+    }
+    
     private void CambiarEstado(EstadoEspiritu nuevoEstado)
     {
         CancelarCorrutinas();

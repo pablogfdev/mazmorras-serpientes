@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class PosicionPuertas : MonoBehaviour
 {
-    private float ancho;
-    private float altura;
+    private float ancho = 30f;
+    private float altura = 20f;
     private float grosorPared = 1f;
-
-    void Awake()
-    {
-        Transform suelo = transform.Find("Suelo(Clone)");
-        ancho  = suelo.localScale.x + 1;
-        altura = suelo.localScale.y + 1;
-        
-    }
-
-    public Vector3 SituarPuerta()
+    
+    public Vector3 SituarPuerta(Vector3 destino)
     {
         Vector3 centro = transform.position;
+        Vector3 dir = (destino - centro).normalized;
 
-        return Random.Range(0, 4) switch
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
         {
-            0 => new Vector3(centro.x, centro.y - altura / 2 + grosorPared, 0),  // Abajo
-            1 => new Vector3(centro.x, centro.y + altura / 2 - grosorPared, 0),  // Arriba
-            2 => new Vector3(centro.x - ancho / 2 + grosorPared, centro.y, 0),   // Izquierda
-            _ => new Vector3(centro.x + ancho / 2 - grosorPared, centro.y, 0)    // Derecha
-        };
+            // Dirección horizontal
+            return dir.x > 0
+                ? new Vector3(centro.x + ancho / 2 - grosorPared, centro.y, 0)  // Derecha
+                : new Vector3(centro.x - ancho / 2 + grosorPared, centro.y, 0); // Izquierda
+        }
+        else
+        {
+            // Dirección vertical
+            return dir.y > 0
+                ? new Vector3(centro.x, centro.y + altura / 2 - grosorPared, 0)  // Arriba
+                : new Vector3(centro.x, centro.y - altura / 2 + grosorPared, 0); // Abajo
+        }
     }
 }

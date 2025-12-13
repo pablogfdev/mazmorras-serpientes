@@ -57,7 +57,11 @@ public class BarraVidaObjetivoController : MonoBehaviour
         float porcentajeVida = enemigo.Vida / enemigo.VidaMaxima;
         ActualizarTransformBarra(porcentajeVida);
         textoInformacionVida.text = enemigo.Vida.ToString();
-        textoInformacionNombre.text = enemigo.name;
+        
+        textoInformacionNombre.text =
+        enemigo is SerpienteController serpiente ? (serpiente.Venenoso ? "Serpiente Venenosa" : "Serpiente") 
+        : enemigo is GolemPiedraController ? "Gólem de Piedra" 
+        : enemigo is EspirituController ? "Espíritu Maligno" : "Enemigo";
     }
 
     void ActualizarBarraVida(float vidaActual)

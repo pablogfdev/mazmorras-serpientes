@@ -38,6 +38,7 @@ public class MenuController : MonoBehaviour
     private GameObject botonPlantillaPartida;
     private Transform contentScrollPartidas;
     private TMP_InputField campoNombreNuevaPartida;
+    private TMP_InputField campoSemillaNuevaPartida;
     private TMP_InputField campoNombreEditarPartida;
 
     private TMP_Dropdown dropdownDificultad;
@@ -71,6 +72,7 @@ public class MenuController : MonoBehaviour
 
     void InstanciarElemenosVentanas()
     {
+        campoSemillaNuevaPartida = ventanaNuevaPartida.transform.Find("CampoSemilla").GetComponent<TMP_InputField>();
         campoNombreNuevaPartida = ventanaNuevaPartida.transform.Find("CampoNombre").GetComponent<TMP_InputField>();
         dropdownDificultad = ventanaNuevaPartida.transform.Find("DropdownDificultad").GetComponent<TMP_Dropdown>();
         campoNombreEditarPartida = ventanaEditarPartida.transform.Find("CampoNombre").GetComponent<TMP_InputField>();
@@ -121,7 +123,6 @@ public class MenuController : MonoBehaviour
     private void ActivarVentana(GameObject ventana)
     {
         AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), Camera.main.transform.position);
-        Debug.Log("Activando ventana: " + ventana.name);
         ventanaPartidasGuardadas.SetActive(false);
         ventanaEliminarPartida.SetActive(false);
         ventanaEditarPartida.SetActive(false);
@@ -246,10 +247,22 @@ public class MenuController : MonoBehaviour
         AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Pulsar_Boton"), transform.position);
         if (!ValidarNombre(campoNombreNuevaPartida.text)) return;
 
+        int? semilla = null;
+        if (!string.IsNullOrWhiteSpace(campoSemillaNuevaPartida.text))
+        {
+            if (!int.TryParse(campoSemillaNuevaPartida.text, out int semillaParseada))
+            {
+                MostrarMensaje("La semilla debe ser un número entero.");
+                return;
+            }
+            semilla = semillaParseada;
+        }
+        
         DatosNuevaPartida datos = new DatosNuevaPartida
         {
             nombre = campoNombreNuevaPartida.text,
-            dificultad = (Dificultad)dropdownDificultad.value
+            dificultad = (Dificultad)dropdownDificultad.value,
+            semilla = semilla
         };
 
         GestorPartidas.CrearNuevaPartida(datos);

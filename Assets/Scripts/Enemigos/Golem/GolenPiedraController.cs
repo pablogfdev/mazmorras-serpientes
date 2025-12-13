@@ -36,13 +36,30 @@ public class GolemPiedraController : EnemigoController
     private Vector3 direccionAleatoria;
     private Transform jugador;
 
+    public override void RecibirDanio(float danio)
+    {
+        float danioFinal = (estadoActual == EstadoGolem.Movimiento) ? 0f : Mathf.Ceil(danio * 0.25f);
+        base.RecibirDanio(danioFinal);
+    }
+
     protected override void Awake()
     {
         base.Awake();
         jugador = GameObject.FindGameObjectWithTag("Player")?.transform;
-        if (jugador != null)
-        CambiarDireccionAleatoria();
+        if (jugador != null) CambiarDireccionAleatoria();
         EstadoActual = (Random.value < 0.5f) ? EstadoGolem.Movimiento : EstadoGolem.Quieto;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        AjustarEstadisticas();
+    }
+
+    void AjustarEstadisticas()
+    {
+        int vidaGenerada = generador.Next(50, 80 + 1);
+        InicializarVida(vidaGenerada);
     }
 
     IEnumerator Esperar()
@@ -86,7 +103,7 @@ public class GolemPiedraController : EnemigoController
         float radio = angulo * Mathf.Deg2Rad;
         direccionAleatoria = new Vector3(Mathf.Cos(radio), Mathf.Sin(radio), 0f).normalized;
     }
-    
+
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player") && estadoActual == EstadoGolem.Movimiento && !ataque)
@@ -100,7 +117,7 @@ public class GolemPiedraController : EnemigoController
     {
         ataque = true;
         jugador.GetComponent<JugadorController>().RecibirDanio(danio);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         ataque = false;
     }
 

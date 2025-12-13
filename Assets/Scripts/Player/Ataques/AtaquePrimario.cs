@@ -21,7 +21,7 @@ public class AtaquePrimario : MonoBehaviour
         if (ataqueEjecutado) return;
         if (!other.CompareTag("Enemigo")) return;
         enemigo = barraVida.Enemigo;
-        if (enemigo != null) enemigo.Vida -= jugador.danioEstocada * jugador.danioExtra;
+        if (enemigo != null) enemigo.RecibirDanio(jugador.danioEstocada * jugador.danioExtra);
         AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Lanza_Clavada"), transform.position);
         ataqueEjecutado = true;
     }

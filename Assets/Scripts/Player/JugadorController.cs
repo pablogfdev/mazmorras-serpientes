@@ -128,7 +128,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator IniciarCorrutinaVelocidad(float velocidadExtra, float duracion)
     {
-        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), transform.position);
         this.velocidadExtra = velocidadExtra;
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Velocidad"), duracion);
         yield return new WaitForSeconds(duracion);
@@ -143,7 +143,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator PotenciarDanio(float danioExtra, float duracion)
     {
-        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), transform.position);
         this.danioExtra = Mathf.RoundToInt(danioExtra);
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Fuerza"), duracion);
         yield return new WaitForSeconds(duracion);
@@ -158,7 +158,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator CurarVida(int vidaExtraPorIntervalo, float duracion)
     {
-        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), transform.position);
         float tiempoPasado = 0f;
         while (tiempoPasado < duracion)
         {
@@ -176,7 +176,7 @@ public class JugadorController : MonoBehaviour
 
     private IEnumerator DarInmunidad(float duracion)
     {
-        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Beber_Pocion"), transform.position);
         inmune = true;
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Antidoto"), duracion);
         yield return new WaitForSeconds(duracion);
