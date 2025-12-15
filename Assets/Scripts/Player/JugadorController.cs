@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class JugadorController : MonoBehaviour
 {
     // Contemplar manejar la vida en un codigo aparte
-    private int vidaBase = 100;
+    private int vidaBase = 1000000;
     private float vidaMaxima;
     public float VidaMaxima { get => vidaMaxima; }
     private float vida;
@@ -118,6 +118,13 @@ public class JugadorController : MonoBehaviour
         espadaSecundaria.SetActive(true);
         while (spriteController.EstaAtacando) yield return null;
         espadaSecundaria.SetActive(false);
+    }
+
+    public void CurarVida(int cantidad)
+    {
+        Debug.Log("Curando vida: " + cantidad);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Vendas"), transform.position, 3f);
+        Vida += cantidad;
     }
 
     public void AumentarVelocidad(float velocidadExtra, float duracion)

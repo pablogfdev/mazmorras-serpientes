@@ -20,7 +20,7 @@ public class JugadorMuerteController : MonoBehaviour
     private IEnumerator SecuenciaMuerte()
     {   
         SonidoManager.sonidoManager.PararMusica();
-        //AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Sonido_Muerte"), Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Sonido_Muerte"), transform.position);
         cuerpo.GetComponent<Animator>().enabled = false;
         cuerpo.GetComponent<SpriteRenderer>().sprite = SpriteManager.spriteManager.ObtenerSprite("Jugador_Muerto");
         MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();

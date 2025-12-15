@@ -9,6 +9,7 @@ public class InventarioHUDManager : MonoBehaviour
     public InventarioUIController inventarioAlmacenUI;
     public AccesoRapidoUIController accesoRapidoUI;
     public GameObject panelJugadorSolo;
+    public GameObject panelComerciante;
     public GameObject panelJugador;
     public GameObject panelAlmacen;
     public GameObject panelAcceso;
@@ -18,6 +19,7 @@ public class InventarioHUDManager : MonoBehaviour
         inventarioHUDManager = this;
 
         panelJugadorSolo = GameObject.Find("Panel_inventario_Jugador");
+        panelComerciante = GameObject.Find("Panel_Comerciante");
         panelAcceso = GameObject.Find("Panel_acceso_rapido");
         panelJugador = GameObject.Find("Panel_Jugador");
         panelAlmacen = GameObject.Find("Panel_Almacen");
@@ -52,12 +54,21 @@ public class InventarioHUDManager : MonoBehaviour
         accesoRapidoUI.ActualizarInventario(inventarioJugador);
     }
 
+    public void MostrarInventarioYComerciante(List<ItemStack> inventarioJugador)
+    {
+        CerrarInventarios();
+        panelJugador.SetActive(true);
+        panelComerciante.SetActive(true);
+        inventarioJugadorEnAlmacenUI.ActualizarInventario(inventarioJugador);
+    }
+
     public void CerrarInventarios()
     {
         panelJugadorSolo.SetActive(false);
         panelJugador.SetActive(false);
         panelAlmacen.SetActive(false);
-        panelAcceso.SetActive(false);    
+        panelAcceso.SetActive(false);  
+        panelComerciante.SetActive(false);  
         GestorPartidas.GuardarInventarios();
     }
 }

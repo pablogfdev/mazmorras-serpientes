@@ -13,6 +13,7 @@ TagManager:
   - Taquilla
   - Salida
   - Pared
+  - Comerciante
   layers:
   - Default
   - TransparentFX

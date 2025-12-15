@@ -30,6 +30,7 @@ public class HabitacionController : MonoBehaviour
 
     public void Inicializar()
     {
+        nivel = GetComponentInParent<MazmorraController>().Nivel;
         InicializarGenerador();
         CalcularNumeroEntidades();
         crearParedes();
@@ -95,16 +96,15 @@ public class HabitacionController : MonoBehaviour
         X = x;
         Y = y;
 
-        mazmorra = GetComponentInParent<MazmorraController>();
-        generador = new System.Random(semilla * 1000 + X * 100 + Y + mazmorra.Nivel * 91);
+        generador = new System.Random(semilla * 1000 + X * 100 + Y + nivel * 91);
     }
 
     void generarEntidades()
     {
         for (int i = 0; i < numCofres; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Cofre"));
-        for (int i = 0; i < numSerpientes; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Serpiente"));
-        for (int i = 0; i < numGolems; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("GolemPiedra"));
-        for (int i = 0; i < numEspiritus; i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Espiritu"));
+        for (int i = 0; i < Mathf.Min(Mathf.CeilToInt(numSerpientes * nivel / 10f), numSerpientes); i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Serpiente"));
+        if (nivel >= 4) for (int i = 0; i < Mathf.Min(Mathf.CeilToInt(numGolems * nivel / 10f), numGolems); i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("GolemPiedra"));
+        if (nivel >= 7) for (int i = 0; i < Mathf.Min(Mathf.CeilToInt(numEspiritus * nivel / 10f), numEspiritus); i++) colocarEntidadEnPosicioValida(PM.prefabManager.ObtenerPrefab("Espiritu"));
     }
 
     void colocarEntidadEnPosicioValida(GameObject prefab)

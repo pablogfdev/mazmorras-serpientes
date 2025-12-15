@@ -4,7 +4,7 @@ using PM = PrefabManager;
 
 public abstract class InventarioBaseUI : MonoBehaviour
 {
-    public List<GameObject> slotsInstanciados = new();
+    private List<GameObject> slotsInstanciados = new();
     protected RectTransform contenido;
     public List<ItemStack> inventario;
 

@@ -26,6 +26,12 @@ public class SonidoManager : MonoBehaviour
         CargarSonido("Beber_Pocion", "Sonidos/Efectos/Beber_Pocion");
         CargarSonido("Lanza_Clavada", "Sonidos/Efectos/Lanza_Clavada");
 
+        CargarSonido("Sonido_Muerte", "Sonidos/Efectos/Sonido_Muerte");
+        CargarSonido("Abrir_Cofre", "Sonidos/Efectos/Abrir_Cofre");
+        CargarSonido("Vendas", "Sonidos/Efectos/Vendas");
+
+        CargarSonido("Error", "Sonidos/Efectos/Error");
+
         CargarSonido("Musica_Menu", "Sonidos/Musica/Musica_Menu");
         CargarSonido("Musica_Mazmorra", "Sonidos/Musica/Musica_Mazmorra");
         CargarSonido("Musica_Comerciante", "Sonidos/Musica/Musica_Comerciante");

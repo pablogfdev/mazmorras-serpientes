@@ -30,7 +30,7 @@ public class PausaJuegoController : MonoBehaviour
     void Update()
     {
         if (esMenuPrincipal || esMenuCarga) return;
-        if (!juegoPausado && Input.GetKeyDown(KeyCode.Space)) TogglePausa();
+        if (!juegoPausado && Input.GetKeyDown(KeyCode.Escape)) TogglePausa();
     }
 
     void IniciarEscena(Scene escena, LoadSceneMode modo)

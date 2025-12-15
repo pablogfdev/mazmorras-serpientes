@@ -6,7 +6,7 @@ using PM = PrefabManager;
 using EC = EscenasController;
 public class InteraccionJugadorController : MonoBehaviour
 {
-    private List<string> tagsValidos = new() { "Puerta", "Cofre", "Taquilla", "Entrada", "Salida" };
+    private List<string> tagsValidos = new() { "Puerta", "Cofre", "Taquilla", "Entrada", "Salida", "Comerciante" };
     private InventarioJugador inventarioJugador;
     public JugadorController jugador;
     private GameObject objetoCercano;
@@ -33,6 +33,7 @@ public class InteraccionJugadorController : MonoBehaviour
         if (objetoCercano.tag == "Puerta") AccionarPuerta();
         if (objetoCercano.tag == "Entrada") AccionarEntradaMazmorra();
         if (objetoCercano.tag == "Salida") AccionarSalidaMazmorra();
+        if (objetoCercano.tag == "Comerciante") AccionarComerciante();
         if ((objetoCercano.tag == "Cofre" || objetoCercano.tag == "Taquilla") && inventarioCerrado) AccionarInventarioAlmacen();
         if (objetoCercano.tag == "Cofre") objetoCercano.GetComponent<CofreScriptController>().AbrirCofre();
         if (!inventarioCerrado) AccionarAccesoRapido();
@@ -52,7 +53,6 @@ public class InteraccionJugadorController : MonoBehaviour
             Instantiate(PM.prefabManager.ObtenerPrefab("MenuNivel"), transform.position, Quaternion.identity);
             PJC.pausaJuegoController.ToggleMenuNiveles();
         }
-        //HUD.inventarioHUDManager.CerrarInventarios();
         return;
     }
 
@@ -64,15 +64,24 @@ public class InteraccionJugadorController : MonoBehaviour
             GestorPartidas.SubirNivel(GameObject.FindWithTag("Mazmorra").GetComponentInChildren<MazmorraController>().Nivel);
             EC.escenasController.CargarEscenaComerciante();
         }
-        else { Debug.Log("El jugador no tiene la llave."); }
+        else AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Error"), Camera.main.transform.position);
         return;
     }
 
     void AccionarInventarioAlmacen()
     {
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Abrir_Cofre"), transform.position);
         var almacen = objetoCercano.GetComponent<InterfazAlmacen>();
         HUD.inventarioHUDManager.CerrarInventarios();
         HUD.inventarioHUDManager.MostrarInventarioJugadorYAlmacen(inventarioJugador.inventario.slots, almacen.inventario.slots);
+        jugador.BloquearMovimiento();
+        return;
+    }
+
+    void AccionarComerciante()
+    {
+        HUD.inventarioHUDManager.CerrarInventarios();
+        HUD.inventarioHUDManager.MostrarInventarioYComerciante(inventarioJugador.inventario.slots);
         jugador.BloquearMovimiento();
         return;
     }
