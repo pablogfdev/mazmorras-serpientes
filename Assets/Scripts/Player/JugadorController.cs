@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class JugadorController : MonoBehaviour
 {
@@ -40,9 +38,10 @@ public class JugadorController : MonoBehaviour
 
     public float danioExtra = 1;
     public int danioEstocada = 20;
-    public int danioBarrido = 8;
+    public int danioBarrido = 10;
     private float defensa = 1;
     public bool inmune = false;
+    private bool envenenado = false;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -205,6 +204,7 @@ public class JugadorController : MonoBehaviour
 
     public void IniciarCorrutinaVeneno(int cantidadIntervalo, float duracion)
     {
+        if (envenenado) return;
         if(corrutinaVeneno != null) StopCoroutine(corrutinaVeneno);
         corrutinaVeneno = StartCoroutine(EnvenenarJugador(cantidadIntervalo, duracion));
     }
@@ -212,11 +212,13 @@ public class JugadorController : MonoBehaviour
     private IEnumerator EnvenenarJugador(int cantidadPorSegundo, float duracion)
     {
         float tiempoPasado = 0;
+        envenenado = true;
         while (tiempoPasado < duracion)
         {
             RecibirDanio(cantidadPorSegundo);
             yield return new WaitForSeconds(1f);
             tiempoPasado += 1f;
         }
+        envenenado = false;
     }
 }

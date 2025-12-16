@@ -484,6 +484,7 @@ GameObject:
   - component: {fileID: 1260334985}
   - component: {fileID: 1260334986}
   - component: {fileID: 1260334987}
+  - component: {fileID: 1260334988}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: JuegoController
@@ -579,6 +580,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0f4ba793454054eac58f093d83cdb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1260334988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260334979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fe263ff3191d94d9427fc41fbf41a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchoJuego: 1280
+  altoJuego: 720
 --- !u!1 &1432048650
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +643,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 224426744}
-  - {fileID: 1039292858}
   - {fileID: 1260334983}
   - {fileID: 1432048652}
   - {fileID: 924626892}
+  - {fileID: 1039292858}

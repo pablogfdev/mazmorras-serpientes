@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 65c056a88e2e3c14786fc7d8692fa3f8
+guid: 64f8ff2b219c844418759e208bc4bcac
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -103,10 +103,10 @@ TextureImporter:
       name: Icono_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 800
-        height: 800
+        x: 1
+        y: 15
+        width: 181
+        height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
