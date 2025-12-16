@@ -56,6 +56,7 @@ public class ComercianteController : MonoBehaviour
         if (!AgregarItemAlInventario(item)) return;
 
         RestarMoneda(producto);
+        AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Compra"), Camera.main.transform.position);
         GestorPartidas.GuardarInventarios();
         InventarioHUDManager.inventarioHUDManager.inventarioJugadorEnAlmacenUI.ActualizarInventario(inventarioJugador.slots);
     }

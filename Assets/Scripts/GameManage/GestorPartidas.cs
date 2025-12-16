@@ -16,7 +16,7 @@ public static class GestorPartidas
         string nombreFiltrado = datos.nombre.Trim();
         int semillaGenerada = System.BitConverter.ToInt32(System.Guid.NewGuid().ToByteArray(), 0);
         int semillaFinal = datos.semilla.HasValue ? datos.semilla.Value : semillaGenerada;
-        partidaActiva = new Partida{ nombre = nombreFiltrado, dificultad = datos != null ? datos.dificultad : Dificultad.Normal, semilla = semillaFinal};
+        partidaActiva = new Partida{nombre = nombreFiltrado, dificultad = datos != null ? datos.dificultad : Dificultad.Normal, semilla = semillaFinal};
         listaPartidas.partidas.Add(partidaActiva);
         GuardarPartidasEnArchivo();
         InstanciarInventarios();
@@ -66,7 +66,9 @@ public static class GestorPartidas
     private static void ObtenerPartidas()
     {
         if (!File.Exists(rutaArchivo)) GuardarPartidasEnArchivo();
-        string json = File.ReadAllText(rutaArchivo);
+        
+        byte[] datosCifrados = File.ReadAllBytes(rutaArchivo);
+        string json = CifradoAES.Descifrar(datosCifrados);
         listaPartidas = JsonUtility.FromJson<ListaPartidas>(json) ?? new ListaPartidas();
     }
 
@@ -96,7 +98,8 @@ public static class GestorPartidas
     {
         if (listaPartidas == null) listaPartidas = new ListaPartidas();
         string json = JsonUtility.ToJson(listaPartidas, true);
-        File.WriteAllText(rutaArchivo, json);
+        byte[] datosCifrados = CifradoAES.Cifrar(json);
+        File.WriteAllBytes(rutaArchivo, datosCifrados);
     }
 
     public static void EliminarPartida(string id)

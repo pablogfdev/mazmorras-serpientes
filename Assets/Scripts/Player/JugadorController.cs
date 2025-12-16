@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class JugadorController : MonoBehaviour
 {
     // Contemplar manejar la vida en un codigo aparte
-    private int vidaBase = 1000000;
+    private int vidaBase = 100;
     private float vidaMaxima;
     public float VidaMaxima { get => vidaMaxima; }
     private float vida;
@@ -40,7 +40,7 @@ public class JugadorController : MonoBehaviour
 
     public float danioExtra = 1;
     public int danioEstocada = 20;
-    public int danioBarrido = 5;
+    public int danioBarrido = 8;
     private float defensa = 1;
     public bool inmune = false;
 
@@ -57,9 +57,9 @@ public class JugadorController : MonoBehaviour
     private Coroutine corrutinaInmunidad;
     private Coroutine corrutinaDefensa;
     private Coroutine corrutinaCuracion;
+    private Coroutine corrutinaVeneno;
     
     private JugadorMuerteController muerteController;
-    [SerializeField] private Animator animCuerpo; 
     [SerializeField] private JugadorSpriteController spriteController;
 
 
@@ -69,7 +69,6 @@ public class JugadorController : MonoBehaviour
         vidaMaxima = vidaBase;
         vida = vidaBase;
 
-        animCuerpo = transform.Find("Cuerpo")?.GetComponent<Animator>();
         spriteController = GetComponent<JugadorSpriteController>();
 
         espadaPrimaria = gameObject.transform.Find("EspadaPrimaria").gameObject;
@@ -122,7 +121,6 @@ public class JugadorController : MonoBehaviour
 
     public void CurarVida(int cantidad)
     {
-        Debug.Log("Curando vida: " + cantidad);
         AudioSource.PlayClipAtPoint(SonidoManager.sonidoManager.ObtenerSonido("Vendas"), transform.position, 3f);
         Vida += cantidad;
     }
@@ -203,5 +201,22 @@ public class JugadorController : MonoBehaviour
         BarraEfectoProgresoController.barraEfectoProgresoController.CrearBarra(IconoManager.iconoManager.ObtenerIcono("Pocion de Defensa"), duracion);
         yield return new WaitForSeconds(duracion);
         defensa = 1f;
+    }
+
+    public void IniciarCorrutinaVeneno(int cantidadIntervalo, float duracion)
+    {
+        if(corrutinaVeneno != null) StopCoroutine(corrutinaVeneno);
+        corrutinaVeneno = StartCoroutine(EnvenenarJugador(cantidadIntervalo, duracion));
+    }
+
+    private IEnumerator EnvenenarJugador(int cantidadPorSegundo, float duracion)
+    {
+        float tiempoPasado = 0;
+        while (tiempoPasado < duracion)
+        {
+            RecibirDanio(cantidadPorSegundo);
+            yield return new WaitForSeconds(1f);
+            tiempoPasado += 1f;
+        }
     }
 }

@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MenuPrincipal.unity
+    guid: 248fdf9b81f36ff45a72f0a7ea98bc33
+  - enabled: 1
     path: Assets/Scenes/Comerciante.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/Mazmorras.unity
     guid: 2b3d9cbd44fa3e3498feafdcef1fa9ad
-  - enabled: 1
-    path: Assets/Scenes/MenuPrincipal.unity
-    guid: 248fdf9b81f36ff45a72f0a7ea98bc33
   - enabled: 1
     path: Assets/Scenes/Carga.unity
     guid: e8add3a9a75342b4d84cbbb24f67d81d

@@ -31,6 +31,7 @@ public class SonidoManager : MonoBehaviour
         CargarSonido("Vendas", "Sonidos/Efectos/Vendas");
 
         CargarSonido("Error", "Sonidos/Efectos/Error");
+        CargarSonido("Compra", "Sonidos/Efectos/Compra");
 
         CargarSonido("Musica_Menu", "Sonidos/Musica/Musica_Menu");
         CargarSonido("Musica_Mazmorra", "Sonidos/Musica/Musica_Mazmorra");
