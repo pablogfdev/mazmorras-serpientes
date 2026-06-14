@@ -40,8 +40,9 @@ El desarrollo sigue un enfoque **modular basado en componentes**, aislando la l�
 
 ### Modelo de Datos (JSON Estructurado)
 
-El modelo lógico emula una base de datos documental (Tercera Forma Normal) encapsulando las entidades dependientes en un único documento raíz. Ejemplo de estructura:
+El modelo lógico emula una base de datos documental (Tercera Forma Normal) encapsulando las entidades dependientes en un único documento raíz:
 
+```json
 {
   "partidas": [
     {
@@ -55,9 +56,3 @@ El modelo lógico emula una base de datos documental (Tercera Forma Normal) enca
     }
   ]
 }
-
----
-
-## 📖 Más Información
-
-Para conocer todos los detalles técnicos, metodologías de desarrollo, diagramas de flujo y el manual de usuario completo, puedes consultar el archivo [DOCUMENTO_X.pdf](DOCUMENTO_X.pdf) ubicado en la raíz de este repositorio.
